@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">CarStoreProject</string>
+    <string name="sign_into_account">Sign into account</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="forgot_password">Forgot your password?</string>
+    <string name="log_in">Log In</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="confirm_password">Confirm password</string>
+    <string name="sign_up">Sign up</string>
+    <string name="not_registered_yet">Not registered yet?</string>
+    <string name="create_an_account">Create an Account</string>
+    <string name="show_password">Show password</string>
+    <string name="hide_password">Hide password</string>
+    <string name="privacy_policy">I have read and agree to the Privacy Policy and Term of Use</string>
+    <string name="terms_of_use_header">Terms of Use</string>
+    <string name="or">or</string>
+    <string name="go_to_login">Have an account? Login</string>
+</resources>
