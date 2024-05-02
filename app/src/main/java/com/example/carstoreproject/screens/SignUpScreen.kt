@@ -24,7 +24,7 @@ import com.example.carstoreproject.R
 import com.example.carstoreproject.components.ButtonComponent
 import com.example.carstoreproject.components.CheckboxComponent
 import com.example.carstoreproject.components.CustomizedTextField
-import com.example.carstoreproject.components.LoginTextComponent
+import com.example.carstoreproject.components.LoginSignUpTextComponent
 import com.example.carstoreproject.components.LogoImage
 import com.example.carstoreproject.components.PasswordTextField
 import com.example.carstoreproject.components.TextDivider
@@ -94,7 +94,9 @@ fun SignUpScreen(
                 textId = R.string.sign_up
             )
             TextDivider()
-            LoginTextComponent(
+            LoginSignUpTextComponent(
+                initialTextId = R.string.have_an_account,
+                clickableTextId = R.string.log_in,
                 onTextSelected = {
                     AcceleratoRouter.navigateTo(Screen.SignInScreen)
                 }

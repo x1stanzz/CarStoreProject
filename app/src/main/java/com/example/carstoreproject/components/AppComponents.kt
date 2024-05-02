@@ -45,6 +45,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
@@ -92,6 +93,8 @@ fun CustomizedTextField(
             keyboardType = keyboardType,
             imeAction = imeAction
         ),
+        singleLine = true,
+        maxLines = 1,
         colors = OutlinedTextFieldDefaults.colors(
             unfocusedBorderColor = Color(0xff2596BE),
             focusedBorderColor = Color(0xff2596BE),
@@ -130,6 +133,8 @@ fun PasswordTextField(
             keyboardType = keyboardType,
             imeAction = imeAction
         ),
+        singleLine = true,
+        maxLines = 1,
         colors = OutlinedTextFieldDefaults.colors(
             unfocusedBorderColor = Color(0xff2596BE),
             focusedBorderColor = Color(0xff2596BE),
@@ -262,13 +267,15 @@ fun TextDivider() {
 }
 
 @Composable
-fun LoginTextComponent(
+fun LoginSignUpTextComponent(
+    @StringRes initialTextId: Int,
+    @StringRes clickableTextId: Int,
     onTextSelected: (String) -> Unit
 ) {
-    val initialText = "Have an account? "
-    val loginText = "Login"
+    val initialText = stringResource(initialTextId)
+    val loginText = stringResource(clickableTextId)
     val annotatedString = buildAnnotatedString {
-        append(initialText)
+        append(initialText + " ")
         withStyle(style = SpanStyle(color = Color(0xff2596BE), textDecoration = TextDecoration.Underline)) {
             pushStringAnnotation(tag = loginText, annotation = loginText)
             append(loginText)
@@ -286,4 +293,22 @@ fun LoginTextComponent(
                 }
             }
     })
+}
+
+@Composable
+fun UnderlinedText(
+    @StringRes textId: Int,
+    textColor: Color = Color.Black
+) {
+    Text(
+        text = stringResource(textId),
+        modifier = Modifier
+            .fillMaxWidth()
+            .heightIn(min = 40.dp)
+            .padding(vertical = dimensionResource(R.dimen.small_padding)),
+        style = MaterialTheme.typography.displayMedium,
+        textAlign = TextAlign.End,
+        textDecoration = TextDecoration.Underline,
+        color = textColor
+    )
 }
