@@ -57,20 +57,29 @@ fun SignInScreen(
                 icon = Icons.Outlined.Person,
                 labelId = R.string.email,
                 keyboardType = KeyboardType.Text,
-                imeAction = ImeAction.Next
+                imeAction = ImeAction.Next,
+                onTextSelected = {
+
+                }
             )
             PasswordTextField(
                 icon = Icons.Outlined.Lock,
                 labelId = R.string.password,
                 keyboardType = KeyboardType.Text,
-                imeAction = ImeAction.Done
+                imeAction = ImeAction.Done,
+                onTextSelected = {
+
+                }
             )
             UnderlinedText(
                 textId = R.string.forgot_password,
                 textColor = Color(0xff2596BE),
             )
             ButtonComponent(
-                textId = R.string.log_in
+                textId = R.string.log_in,
+                onButtonClicked = {
+
+                }
             )
             TextDivider()
             LoginSignUpTextComponent(

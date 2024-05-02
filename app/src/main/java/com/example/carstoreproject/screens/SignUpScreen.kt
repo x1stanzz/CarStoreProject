@@ -20,6 +20,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.carstoreproject.R
 import com.example.carstoreproject.components.ButtonComponent
 import com.example.carstoreproject.components.CheckboxComponent
@@ -28,11 +29,14 @@ import com.example.carstoreproject.components.LoginSignUpTextComponent
 import com.example.carstoreproject.components.LogoImage
 import com.example.carstoreproject.components.PasswordTextField
 import com.example.carstoreproject.components.TextDivider
+import com.example.carstoreproject.data.LoginViewModel
+import com.example.carstoreproject.data.UIEvent
 import com.example.carstoreproject.navigation.AcceleratoRouter
 import com.example.carstoreproject.navigation.Screen
 
 @Composable
 fun SignUpScreen(
+    loginViewModel: LoginViewModel = viewModel(),
     modifier: Modifier = Modifier
 ) {
     Surface(
@@ -58,31 +62,46 @@ fun SignUpScreen(
                 icon = Icons.Outlined.Person,
                 labelId = R.string.first_name,
                 keyboardType = KeyboardType.Text,
-                imeAction = ImeAction.Next
+                imeAction = ImeAction.Next,
+                onTextSelected = {
+                    loginViewModel.onEvent(UIEvent.FirstNameChanged(it))
+                }
             )
             CustomizedTextField(
                 icon = Icons.Outlined.Person,
                 labelId = R.string.last_name,
                 keyboardType = KeyboardType.Text,
-                imeAction = ImeAction.Next
+                imeAction = ImeAction.Next,
+                onTextSelected = {
+                    loginViewModel.onEvent(UIEvent.LastNameChanged(it))
+                }
             )
             CustomizedTextField(
                 icon = Icons.Outlined.Email,
                 labelId = R.string.email,
                 keyboardType = KeyboardType.Text,
-                imeAction = ImeAction.Next
+                imeAction = ImeAction.Next,
+                onTextSelected = {
+                    loginViewModel.onEvent(UIEvent.EmailChanged(it))
+                }
             )
             PasswordTextField(
                 icon = Icons.Outlined.Lock,
                 labelId = R.string.password,
                 keyboardType = KeyboardType.Text,
                 imeAction = ImeAction.Next,
+                onTextSelected = {
+                    loginViewModel.onEvent(UIEvent.PasswordChanged(it))
+                }
             )
             PasswordTextField(
                 icon = Icons.Outlined.Lock,
                 labelId = R.string.confirm_password,
                 keyboardType = KeyboardType.Text,
                 imeAction = ImeAction.Done,
+                onTextSelected = {
+                    loginViewModel.onEvent(UIEvent.ConfirmPasswordChanged(it))
+                }
             )
             CheckboxComponent(
                 textId = R.string.privacy_policy,
@@ -91,7 +110,10 @@ fun SignUpScreen(
                 }
             )
             ButtonComponent(
-                textId = R.string.sign_up
+                textId = R.string.sign_up,
+                onButtonClicked = {
+                    loginViewModel.onEvent(UIEvent.RegisterButtonClicked)
+                }
             )
             TextDivider()
             LoginSignUpTextComponent(
