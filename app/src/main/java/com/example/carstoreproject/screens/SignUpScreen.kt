@@ -27,7 +27,6 @@ import com.example.carstoreproject.components.CheckboxComponent
 import com.example.carstoreproject.components.CustomizedTextField
 import com.example.carstoreproject.components.LoginSignUpTextComponent
 import com.example.carstoreproject.components.LogoImage
-import com.example.carstoreproject.components.PasswordTextField
 import com.example.carstoreproject.components.TextDivider
 import com.example.carstoreproject.data.LoginViewModel
 import com.example.carstoreproject.data.UIEvent
@@ -85,23 +84,25 @@ fun SignUpScreen(
                     loginViewModel.onEvent(UIEvent.EmailChanged(it))
                 }
             )
-            PasswordTextField(
+            CustomizedTextField(
                 icon = Icons.Outlined.Lock,
                 labelId = R.string.password,
                 keyboardType = KeyboardType.Text,
                 imeAction = ImeAction.Next,
                 onTextSelected = {
                     loginViewModel.onEvent(UIEvent.PasswordChanged(it))
-                }
+                },
+                isPassword = true
             )
-            PasswordTextField(
+            CustomizedTextField(
                 icon = Icons.Outlined.Lock,
                 labelId = R.string.confirm_password,
                 keyboardType = KeyboardType.Text,
                 imeAction = ImeAction.Done,
                 onTextSelected = {
                     loginViewModel.onEvent(UIEvent.ConfirmPasswordChanged(it))
-                }
+                },
+                isPassword = true
             )
             CheckboxComponent(
                 textId = R.string.privacy_policy,

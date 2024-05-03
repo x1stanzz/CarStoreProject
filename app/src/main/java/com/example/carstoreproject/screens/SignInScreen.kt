@@ -24,7 +24,6 @@ import com.example.carstoreproject.components.ButtonComponent
 import com.example.carstoreproject.components.CustomizedTextField
 import com.example.carstoreproject.components.LoginSignUpTextComponent
 import com.example.carstoreproject.components.LogoImage
-import com.example.carstoreproject.components.PasswordTextField
 import com.example.carstoreproject.components.TextDivider
 import com.example.carstoreproject.components.UnderlinedText
 import com.example.carstoreproject.navigation.AcceleratoRouter
@@ -62,14 +61,15 @@ fun SignInScreen(
 
                 }
             )
-            PasswordTextField(
+            CustomizedTextField(
                 icon = Icons.Outlined.Lock,
                 labelId = R.string.password,
                 keyboardType = KeyboardType.Text,
                 imeAction = ImeAction.Done,
                 onTextSelected = {
 
-                }
+                },
+                isPassword = true
             )
             UnderlinedText(
                 textId = R.string.forgot_password,

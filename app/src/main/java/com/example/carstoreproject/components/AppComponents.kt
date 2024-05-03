@@ -76,9 +76,13 @@ fun CustomizedTextField(
     icon: ImageVector,
     @StringRes labelId: Int,
     keyboardType: KeyboardType,
-    imeAction: ImeAction
+    imeAction: ImeAction,
+    onTextSelected: (String) -> Unit,
+    isPassword: Boolean = false
 ) {
     var textValue by rememberSaveable { mutableStateOf("")}
+    var isVisible by rememberSaveable { mutableStateOf(false) }
+
     OutlinedTextField(
         leadingIcon = {
             Icon(
@@ -101,64 +105,27 @@ fun CustomizedTextField(
             focusedLeadingIconColor = Color(0xff2596BE),
             focusedLabelColor = Color(0xff2596BE)
         ),
-        modifier = Modifier.fillMaxWidth()
-    )
-}
-
-@Composable
-fun PasswordTextField(
-    icon: ImageVector,
-    @StringRes labelId: Int,
-    keyboardType: KeyboardType,
-    imeAction: ImeAction
-) {
-    var password by rememberSaveable { mutableStateOf("")}
-    var isVisible by rememberSaveable { mutableStateOf(false) }
-    OutlinedTextField(
-        leadingIcon = {
-            Icon(
-                imageVector = icon,
-                contentDescription = ""
-            )
-        },
-        value = password,
-        onValueChange = { password = it},
-        label = { Text(stringResource(labelId)) },
-        visualTransformation = if(isVisible) {
-            VisualTransformation.None
-        } else {
-            PasswordVisualTransformation()
-        },
-        keyboardOptions = KeyboardOptions (
-            keyboardType = keyboardType,
-            imeAction = imeAction
-        ),
-        singleLine = true,
-        maxLines = 1,
-        colors = OutlinedTextFieldDefaults.colors(
-            unfocusedBorderColor = Color(0xff2596BE),
-            focusedBorderColor = Color(0xff2596BE),
-            focusedLeadingIconColor = Color(0xff2596BE),
-            focusedLabelColor = Color(0xff2596BE)
-        ),
+        visualTransformation = if(!isVisible) PasswordVisualTransformation() else VisualTransformation.None,
         trailingIcon = {
-            val iconImage = if(isVisible) {
-                Icons.Outlined.Visibility
-            } else {
-                Icons.Outlined.VisibilityOff
-            }
+            if(isPassword) {
+                val iconImage = if(isVisible) {
+                    Icons.Outlined.Visibility
+                } else {
+                    Icons.Outlined.VisibilityOff
+                }
 
-            var description = if(isVisible) {
-                stringResource(R.string.hide_password)
-            } else {
-                stringResource(R.string.show_password)
-            }
+                var description = if(isVisible) {
+                    stringResource(R.string.hide_password)
+                } else {
+                    stringResource(R.string.show_password)
+                }
 
-            IconButton(onClick = { isVisible = !isVisible }) {
-                Icon(
-                    imageVector = iconImage,
-                    contentDescription = description
-                )
+                IconButton(onClick = { isVisible = !isVisible }) {
+                    Icon(
+                        imageVector = iconImage,
+                        contentDescription = description
+                    )
+                }
             }
         },
         modifier = Modifier.fillMaxWidth()
@@ -221,10 +188,11 @@ fun ClickableTextComponent(
 
 @Composable
 fun ButtonComponent(
-    @StringRes textId: Int
+    @StringRes textId: Int,
+    onButtonClicked: () -> Unit
 ) {
     Button(
-        onClick = { /*TODO*/ },
+        onClick = { onButtonClicked() },
         modifier = Modifier
             .fillMaxWidth()
             .heightIn(48.dp),
