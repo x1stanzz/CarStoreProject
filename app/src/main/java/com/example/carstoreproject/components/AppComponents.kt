@@ -1,5 +1,6 @@
 package com.example.carstoreproject.components
 
+import android.text.TextUtils
 import android.util.Log
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
@@ -78,57 +79,78 @@ fun CustomizedTextField(
     keyboardType: KeyboardType,
     imeAction: ImeAction,
     onTextSelected: (String) -> Unit,
+    @StringRes errorMessage: Int,
+    isError: Boolean = false,
     isPassword: Boolean = false
 ) {
     var textValue by rememberSaveable { mutableStateOf("")}
     var isVisible by rememberSaveable { mutableStateOf(false) }
+    Column {
+        OutlinedTextField(
+            leadingIcon = {
+                Icon(
+                    imageVector = icon,
+                    contentDescription = ""
+                )
+            },
+            value = textValue,
+            onValueChange = {
+                textValue = it
+                onTextSelected(it)
+            },
+            label = { Text(stringResource(labelId)) },
+            keyboardOptions = KeyboardOptions (
+                keyboardType = keyboardType,
+                imeAction = imeAction
+            ),
+            singleLine = true,
+            maxLines = 1,
+            colors = OutlinedTextFieldDefaults.colors(
+                unfocusedBorderColor = Color(0xff2596BE),
+                focusedBorderColor = Color(0xff2596BE),
+                focusedLeadingIconColor = Color(0xff2596BE),
+                focusedLabelColor = Color(0xff2596BE)
+            ),
+            visualTransformation = if(!isVisible) PasswordVisualTransformation() else VisualTransformation.None,
+            trailingIcon = {
+                if(isPassword) {
+                    val iconImage = if(isVisible) {
+                        Icons.Outlined.Visibility
+                    } else {
+                        Icons.Outlined.VisibilityOff
+                    }
 
-    OutlinedTextField(
-        leadingIcon = {
-            Icon(
-                imageVector = icon,
-                contentDescription = ""
-            )
-        },
-        value = textValue,
-        onValueChange = { textValue = it},
-        label = { Text(stringResource(labelId)) },
-        keyboardOptions = KeyboardOptions (
-            keyboardType = keyboardType,
-            imeAction = imeAction
-        ),
-        singleLine = true,
-        maxLines = 1,
-        colors = OutlinedTextFieldDefaults.colors(
-            unfocusedBorderColor = Color(0xff2596BE),
-            focusedBorderColor = Color(0xff2596BE),
-            focusedLeadingIconColor = Color(0xff2596BE),
-            focusedLabelColor = Color(0xff2596BE)
-        ),
-        visualTransformation = if(!isVisible) PasswordVisualTransformation() else VisualTransformation.None,
-        trailingIcon = {
-            if(isPassword) {
-                val iconImage = if(isVisible) {
-                    Icons.Outlined.Visibility
-                } else {
-                    Icons.Outlined.VisibilityOff
-                }
+                    var description = if(isVisible) {
+                        stringResource(R.string.hide_password)
+                    } else {
+                        stringResource(R.string.show_password)
+                    }
 
-                var description = if(isVisible) {
-                    stringResource(R.string.hide_password)
-                } else {
-                    stringResource(R.string.show_password)
+                    IconButton(onClick = { isVisible = !isVisible }) {
+                        Icon(
+                            imageVector = iconImage,
+                            contentDescription = description
+                        )
+                    }
                 }
+            },
+            modifier = Modifier.fillMaxWidth()
+        )
+        if(!TextUtils.isEmpty(stringResource(errorMessage)) && isError) {
+            ShowErrorText(textId = errorMessage)
+        }
+    }
+}
 
-                IconButton(onClick = { isVisible = !isVisible }) {
-                    Icon(
-                        imageVector = iconImage,
-                        contentDescription = description
-                    )
-                }
-            }
-        },
-        modifier = Modifier.fillMaxWidth()
+@Composable
+fun ShowErrorText(
+    @StringRes textId: Int,
+    modifier: Modifier = Modifier
+) {
+    Text(
+        text = stringResource(textId),
+        style = MaterialTheme.typography.labelSmall,
+        modifier = modifier
     )
 }
 

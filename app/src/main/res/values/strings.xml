@@ -17,4 +17,8 @@
     <string name="terms_of_use_header">Terms of Use</string>
     <string name="or">or</string>
     <string name="have_an_account">Have an account?</string>
+    <string name="name_field_error">Your name must consist of 2 characters or more</string>
+    <string name="email_error">Invalid email</string>
+    <string name="password_error">Your password must consist of 8 or more characters</string>
+    <string name="confirm_password_error">Passwords must match</string>
 </resources>

@@ -64,7 +64,8 @@ fun SignUpScreen(
                 imeAction = ImeAction.Next,
                 onTextSelected = {
                     loginViewModel.onEvent(UIEvent.FirstNameChanged(it))
-                }
+                },
+                errorMessage = R.string.name_field_error
             )
             CustomizedTextField(
                 icon = Icons.Outlined.Person,
@@ -73,7 +74,8 @@ fun SignUpScreen(
                 imeAction = ImeAction.Next,
                 onTextSelected = {
                     loginViewModel.onEvent(UIEvent.LastNameChanged(it))
-                }
+                },
+                errorMessage = R.string.name_field_error
             )
             CustomizedTextField(
                 icon = Icons.Outlined.Email,
@@ -82,7 +84,8 @@ fun SignUpScreen(
                 imeAction = ImeAction.Next,
                 onTextSelected = {
                     loginViewModel.onEvent(UIEvent.EmailChanged(it))
-                }
+                },
+                errorMessage = R.string.email_error
             )
             CustomizedTextField(
                 icon = Icons.Outlined.Lock,
@@ -92,7 +95,8 @@ fun SignUpScreen(
                 onTextSelected = {
                     loginViewModel.onEvent(UIEvent.PasswordChanged(it))
                 },
-                isPassword = true
+                isPassword = true,
+                errorMessage = R.string.password_error
             )
             CustomizedTextField(
                 icon = Icons.Outlined.Lock,
@@ -102,7 +106,8 @@ fun SignUpScreen(
                 onTextSelected = {
                     loginViewModel.onEvent(UIEvent.ConfirmPasswordChanged(it))
                 },
-                isPassword = true
+                isPassword = true,
+                errorMessage = R.string.confirm_password
             )
             CheckboxComponent(
                 textId = R.string.privacy_policy,
