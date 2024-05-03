@@ -59,7 +59,10 @@ fun SignInScreen(
                 imeAction = ImeAction.Next,
                 onTextSelected = {
 
-                }
+                },
+                isError = false,
+                errorMessage = R.string.email_error,
+                showError = false
             )
             CustomizedTextField(
                 icon = Icons.Outlined.Lock,
@@ -69,7 +72,10 @@ fun SignInScreen(
                 onTextSelected = {
 
                 },
-                isPassword = true
+                isPassword = true,
+                isError = false,
+                errorMessage = R.string.password_error,
+                showError = false
             )
             UnderlinedText(
                 textId = R.string.forgot_password,

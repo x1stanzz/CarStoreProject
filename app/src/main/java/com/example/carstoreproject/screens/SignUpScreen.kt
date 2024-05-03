@@ -1,5 +1,6 @@
 package com.example.carstoreproject.screens
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -12,6 +13,10 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.dimensionResource
@@ -33,11 +38,13 @@ import com.example.carstoreproject.data.UIEvent
 import com.example.carstoreproject.navigation.AcceleratoRouter
 import com.example.carstoreproject.navigation.Screen
 
+@SuppressLint("StateFlowValueCalledInComposition")
 @Composable
 fun SignUpScreen(
     loginViewModel: LoginViewModel = viewModel(),
     modifier: Modifier = Modifier
 ) {
+    var showError by remember { mutableStateOf(false) }
     Surface(
         color = Color.White,
         modifier = Modifier.fillMaxSize()
@@ -65,7 +72,9 @@ fun SignUpScreen(
                 onTextSelected = {
                     loginViewModel.onEvent(UIEvent.FirstNameChanged(it))
                 },
-                errorMessage = R.string.name_field_error
+                isError = loginViewModel.validatorState.value.firstNameError,
+                errorMessage = R.string.name_field_error,
+                showError = showError
             )
             CustomizedTextField(
                 icon = Icons.Outlined.Person,
@@ -75,7 +84,9 @@ fun SignUpScreen(
                 onTextSelected = {
                     loginViewModel.onEvent(UIEvent.LastNameChanged(it))
                 },
-                errorMessage = R.string.name_field_error
+                isError = loginViewModel.validatorState.value.lastNameError,
+                errorMessage = R.string.name_field_error,
+                showError = showError
             )
             CustomizedTextField(
                 icon = Icons.Outlined.Email,
@@ -85,7 +96,9 @@ fun SignUpScreen(
                 onTextSelected = {
                     loginViewModel.onEvent(UIEvent.EmailChanged(it))
                 },
-                errorMessage = R.string.email_error
+                isError = loginViewModel.validatorState.value.emailError,
+                errorMessage = R.string.email_error,
+                showError = showError
             )
             CustomizedTextField(
                 icon = Icons.Outlined.Lock,
@@ -96,7 +109,9 @@ fun SignUpScreen(
                     loginViewModel.onEvent(UIEvent.PasswordChanged(it))
                 },
                 isPassword = true,
-                errorMessage = R.string.password_error
+                isError = loginViewModel.validatorState.value.passwordError,
+                errorMessage = R.string.password_error,
+                showError = showError
             )
             CustomizedTextField(
                 icon = Icons.Outlined.Lock,
@@ -107,10 +122,11 @@ fun SignUpScreen(
                     loginViewModel.onEvent(UIEvent.ConfirmPasswordChanged(it))
                 },
                 isPassword = true,
-                errorMessage = R.string.confirm_password
+                isError = loginViewModel.validatorState.value.confirmPasswordError,
+                errorMessage = R.string.confirm_password_error,
+                showError = showError
             )
             CheckboxComponent(
-                textId = R.string.privacy_policy,
                 onTextSelected = {
                     AcceleratoRouter.navigateTo(Screen.TermsAndConditionsScreen)
                 }
@@ -119,6 +135,7 @@ fun SignUpScreen(
                 textId = R.string.sign_up,
                 onButtonClicked = {
                     loginViewModel.onEvent(UIEvent.RegisterButtonClicked)
+                    showError = true
                 }
             )
             TextDivider()

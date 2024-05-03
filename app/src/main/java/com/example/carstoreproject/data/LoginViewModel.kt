@@ -1,58 +1,48 @@
 package com.example.carstoreproject.data
 
 import android.util.Log
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.update
+import com.example.carstoreproject.data.rules.Validator
+import com.example.carstoreproject.data.rules.ValidatorState
 
 class LoginViewModel : ViewModel() {
     private val TAG = LoginViewModel::class.simpleName
-    private val _registrationUIState = MutableStateFlow(RegistrationUIState())
-    val registrationUIState: StateFlow<RegistrationUIState> = _registrationUIState.asStateFlow()
 
+    var registrationUIState = mutableStateOf(RegistrationUIState())
+
+    val validatorState = mutableStateOf(ValidatorState())
     fun onEvent(event: UIEvent) {
         when(event) {
             is UIEvent.FirstNameChanged -> {
-                _registrationUIState.update {currentState ->
-                    currentState.copy(
-                        firstName = event.firstName
-                    )
-                }
+                registrationUIState.value = registrationUIState.value.copy(
+                    firstName = event.firstName
+                )
                 printState()
             }
             is UIEvent.LastNameChanged -> {
-                _registrationUIState.update { currentState ->
-                    currentState.copy(
-                        lastName = event.lastName
-                    )
-                }
+                registrationUIState.value = registrationUIState.value.copy(
+                    lastName = event.lastName
+                )
                 printState()
 
             }
             is UIEvent.EmailChanged -> {
-                _registrationUIState.update { currentState ->
-                    currentState.copy(
-                        email = event.email
-                    )
-                }
+                registrationUIState.value = registrationUIState.value.copy(
+                    email = event.email
+                )
                 printState()
             }
             is UIEvent.PasswordChanged -> {
-                _registrationUIState.update {currentState ->
-                    currentState.copy(
-                        password = event.password
-                    )
-                }
+                registrationUIState.value = registrationUIState.value.copy(
+                    password = event.password
+                )
                 printState()
             }
             is UIEvent.ConfirmPasswordChanged -> {
-                _registrationUIState.update { currentState ->
-                    currentState.copy(
-                        confirmPassword = event.confirmPassword
-                    )
-                }
+                registrationUIState.value = registrationUIState.value.copy(
+                    confirmPassword = event.confirmPassword
+                )
                 printState()
 
             }
@@ -64,13 +54,45 @@ class LoginViewModel : ViewModel() {
     private fun signUp() {
         Log.d(TAG, "Inside_signUp")
         printState()
+        validateDataWithRules()
     }
     private fun printState() {
         Log.d(TAG, "Inside_printState")
         Log.d(TAG, registrationUIState.value.toString())
+        Log.d(TAG, validatorState.value.toString())
+    }
+    private fun validateDataWithRules() {
+        val fNameResult = Validator.validateFirstName(
+            fName = registrationUIState.value.firstName
+        )
+        val lNameResult = Validator.validateLastName(
+            lName = registrationUIState.value.lastName
+        )
+        val emailResult = Validator.validateEmail(
+            email = registrationUIState.value.email
+        )
+        val passwordResult = Validator.validatePassword(
+            password = registrationUIState.value.password
+        )
+        val confirmPasswordResult = Validator.validateConfirmPassword(
+            password = registrationUIState.value.password,
+            confirmPassword = registrationUIState.value.confirmPassword
+        )
+
+        Log.d(TAG, "Inside_validateDataWithRules")
+        Log.d(TAG, "fNameResult=$fNameResult")
+        Log.d(TAG, "lNameResult=$lNameResult")
+        Log.d(TAG, "emailResult=$emailResult")
+        Log.d(TAG, "passwordResult=$passwordResult")
+        Log.d(TAG, "confirmPasswordResult=$confirmPasswordResult")
+
+        validatorState.value = validatorState.value.copy(
+            firstNameError = fNameResult,
+            lastNameError = lNameResult,
+            emailError = emailResult,
+            passwordError = passwordResult,
+            confirmPasswordError = confirmPasswordResult
+        )
     }
 
-//    private fun checkPasswordEquality() {
-//        Log.d(TAG, "${registrationUIState.value.password == registrationUIState.value.confirmPassword}")
-//    }
 }

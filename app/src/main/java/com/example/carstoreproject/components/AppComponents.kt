@@ -31,6 +31,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -81,10 +82,12 @@ fun CustomizedTextField(
     onTextSelected: (String) -> Unit,
     @StringRes errorMessage: Int,
     isError: Boolean = false,
-    isPassword: Boolean = false
+    isPassword: Boolean = false,
+    showError: Boolean
 ) {
-    var textValue by rememberSaveable { mutableStateOf("")}
-    var isVisible by rememberSaveable { mutableStateOf(false) }
+    var textValue by remember { mutableStateOf("")}
+    var isVisible by remember { mutableStateOf(true) }
+
     Column {
         OutlinedTextField(
             leadingIcon = {
@@ -111,7 +114,15 @@ fun CustomizedTextField(
                 focusedLeadingIconColor = Color(0xff2596BE),
                 focusedLabelColor = Color(0xff2596BE)
             ),
-            visualTransformation = if(!isVisible) PasswordVisualTransformation() else VisualTransformation.None,
+            visualTransformation = if(isPassword) {
+                if (isVisible) {
+                    PasswordVisualTransformation()
+                } else {
+                    VisualTransformation.None
+                }
+            } else {
+                VisualTransformation.None
+            },
             trailingIcon = {
                 if(isPassword) {
                     val iconImage = if(isVisible) {
@@ -120,7 +131,7 @@ fun CustomizedTextField(
                         Icons.Outlined.VisibilityOff
                     }
 
-                    var description = if(isVisible) {
+                    val description = if(isVisible) {
                         stringResource(R.string.hide_password)
                     } else {
                         stringResource(R.string.show_password)
@@ -136,7 +147,7 @@ fun CustomizedTextField(
             },
             modifier = Modifier.fillMaxWidth()
         )
-        if(!TextUtils.isEmpty(stringResource(errorMessage)) && isError) {
+        if(showError && !TextUtils.isEmpty(stringResource(errorMessage)) && !isError) {
             ShowErrorText(textId = errorMessage)
         }
     }
@@ -156,7 +167,6 @@ fun ShowErrorText(
 
 @Composable
 fun CheckboxComponent(
-    @StringRes textId: Int,
     onTextSelected: (String) -> Unit
 ) {
     Row(
@@ -166,10 +176,10 @@ fun CheckboxComponent(
         verticalAlignment = Alignment.CenterVertically,
 
     ) {
-        val isChecked by rememberSaveable { mutableStateOf(false)}
+        var isChecked by rememberSaveable { mutableStateOf(false)}
         Checkbox(
             checked = isChecked,
-            onCheckedChange = { isChecked != isChecked }
+            onCheckedChange = { isChecked = it }
         )
         ClickableTextComponent(
             onTextSelected = onTextSelected
@@ -200,7 +210,7 @@ fun ClickableTextComponent(
     ClickableText(text = annotatedString, onClick = { offset ->
         annotatedString.getStringAnnotations(offset, offset)
             .firstOrNull()?.let { span ->
-                Log.d("Clickable text component: ","${span.item}")
+                Log.d("Clickable text component: ", span.item)
                 if(span.item == termsOfUseText || span.item == privacyPolicyText) {
                     onTextSelected(span.item)
                 }
@@ -214,7 +224,9 @@ fun ButtonComponent(
     onButtonClicked: () -> Unit
 ) {
     Button(
-        onClick = { onButtonClicked() },
+        onClick = {
+            onButtonClicked()
+        },
         modifier = Modifier
             .fillMaxWidth()
             .heightIn(48.dp),
@@ -265,7 +277,7 @@ fun LoginSignUpTextComponent(
     val initialText = stringResource(initialTextId)
     val loginText = stringResource(clickableTextId)
     val annotatedString = buildAnnotatedString {
-        append(initialText + " ")
+        append("$initialText ")
         withStyle(style = SpanStyle(color = Color(0xff2596BE), textDecoration = TextDecoration.Underline)) {
             pushStringAnnotation(tag = loginText, annotation = loginText)
             append(loginText)
@@ -277,7 +289,7 @@ fun LoginSignUpTextComponent(
         text = annotatedString, onClick = { offset ->
         annotatedString.getStringAnnotations(offset, offset)
             .firstOrNull()?.let { span ->
-                Log.d("Clickable text component: ","${span.item}")
+                Log.d("Clickable text component: ", span.item)
                 if(span.item == loginText) {
                     onTextSelected(span.item)
                 }

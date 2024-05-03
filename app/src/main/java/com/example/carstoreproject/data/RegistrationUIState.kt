@@ -5,5 +5,5 @@ data class RegistrationUIState(
     var lastName: String = "",
     var email: String = "",
     var password: String = "",
-    var confirmPassword: String = "",
+    var confirmPassword: String = ""
 )
