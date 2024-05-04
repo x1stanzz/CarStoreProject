@@ -11,6 +11,7 @@ import androidx.compose.ui.res.dimensionResource
 import com.example.carstoreproject.R
 import com.example.carstoreproject.navigation.AcceleratoRouter
 import com.example.carstoreproject.navigation.Screen
+import com.example.carstoreproject.screens.HomeScreen
 import com.example.carstoreproject.screens.SignInScreen
 import com.example.carstoreproject.screens.SignUpScreen
 import com.example.carstoreproject.screens.TermsAndConditionsScreen
@@ -34,6 +35,9 @@ fun CarStoreApp() {
                 }
                 is Screen.SignInScreen -> {
                     SignInScreen()
+                }
+                is Screen.HomeScreen -> {
+                    HomeScreen()
                 }
             }
             

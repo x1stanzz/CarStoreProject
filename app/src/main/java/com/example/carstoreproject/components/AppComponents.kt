@@ -167,7 +167,8 @@ fun ShowErrorText(
 
 @Composable
 fun CheckboxComponent(
-    onTextSelected: (String) -> Unit
+    onTextSelected: (String) -> Unit,
+    onCheckedChange: (Boolean) -> Unit
 ) {
     Row(
         modifier = Modifier
@@ -179,7 +180,10 @@ fun CheckboxComponent(
         var isChecked by rememberSaveable { mutableStateOf(false)}
         Checkbox(
             checked = isChecked,
-            onCheckedChange = { isChecked = it }
+            onCheckedChange = {
+                isChecked = it
+                onCheckedChange.invoke(it)
+            }
         )
         ClickableTextComponent(
             onTextSelected = onTextSelected
