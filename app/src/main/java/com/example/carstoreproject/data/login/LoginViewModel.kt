@@ -36,16 +36,20 @@ class LoginViewModel : ViewModel() {
             }
 
             is LoginUIEvent.LoginButtonClicked -> {
-                login()
                 validateLoginUIDataWithRules()
+                if(allValidationsPassed.value) {
+                    login(loginUIState.value.email, loginUIState.value.password)
+                }
+            }
+
+            is LoginUIEvent.ForgotPasswordButtonCLicked -> {
+                AcceleratoRouter.navigateTo(Screen.ForgotPasswordScreen)
             }
         }
     }
 
-    private fun login() {
+    private fun login(email: String, password: String) {
         loginInProgress.value = true
-        val email = loginUIState.value.email
-        val password = loginUIState.value.password
         FirebaseAuth
             .getInstance()
             .signInWithEmailAndPassword(email, password)

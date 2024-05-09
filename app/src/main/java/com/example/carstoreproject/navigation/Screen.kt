@@ -8,6 +8,7 @@ sealed class Screen {
     object TermsAndConditionsScreen : Screen()
     object SignInScreen : Screen()
     object HomeScreen : Screen()
+    object ForgotPasswordScreen : Screen()
 }
 
 object AcceleratoRouter {

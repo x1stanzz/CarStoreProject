@@ -28,6 +28,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -67,8 +68,8 @@ fun LogoImage(
             painter = painterResource(imageId),
             contentDescription = "",
             modifier = Modifier
-                .height(70.dp)
-                .width(150.dp)
+                .height(100.dp)
+                .width(250.dp)
         )
     }
 }
@@ -109,10 +110,10 @@ fun CustomizedTextField(
             singleLine = true,
             maxLines = 1,
             colors = OutlinedTextFieldDefaults.colors(
-                unfocusedBorderColor = Color(0xff2596BE),
-                focusedBorderColor = Color(0xff2596BE),
-                focusedLeadingIconColor = Color(0xff2596BE),
-                focusedLabelColor = Color(0xff2596BE)
+                unfocusedBorderColor = Color(0xff6789ba),
+                focusedBorderColor = Color(0xff6789ba),
+                focusedLeadingIconColor = Color(0xff6789ba),
+                focusedLabelColor = Color(0xff6789ba)
             ),
             visualTransformation = if(isPassword) {
                 if (isVisible) {
@@ -201,12 +202,12 @@ fun ClickableTextComponent(
     val termsOfUseText = "Term of Use"
     val annotatedString = buildAnnotatedString {
         append(initialText)
-        withStyle(style = SpanStyle(color = Color(0xff2596BE), textDecoration = TextDecoration.Underline)) {
+        withStyle(style = SpanStyle(color = Color(0xff6789ba), textDecoration = TextDecoration.Underline)) {
             pushStringAnnotation(tag = privacyPolicyText, annotation = privacyPolicyText)
             append(privacyPolicyText)
         }
         append(andText)
-        withStyle(style = SpanStyle(color = Color(0xff2596BE), textDecoration = TextDecoration.Underline)) {
+        withStyle(style = SpanStyle(color = Color(0xff6789ba), textDecoration = TextDecoration.Underline)) {
             pushStringAnnotation(tag = termsOfUseText, annotation = termsOfUseText)
             append(termsOfUseText)
         }
@@ -235,7 +236,7 @@ fun ButtonComponent(
             .fillMaxWidth()
             .heightIn(48.dp),
         contentPadding = PaddingValues(),
-        colors = ButtonDefaults.buttonColors(Color(0xff2596BE))
+        colors = ButtonDefaults.buttonColors(Color(0xff6789ba))
     ) {
         Text(
             text = stringResource(textId)
@@ -282,7 +283,7 @@ fun LoginSignUpTextComponent(
     val loginText = stringResource(clickableTextId)
     val annotatedString = buildAnnotatedString {
         append("$initialText ")
-        withStyle(style = SpanStyle(color = Color(0xff2596BE), textDecoration = TextDecoration.Underline)) {
+        withStyle(style = SpanStyle(color = Color(0xff6789ba), textDecoration = TextDecoration.Underline)) {
             pushStringAnnotation(tag = loginText, annotation = loginText)
             append(loginText)
         }
@@ -302,19 +303,21 @@ fun LoginSignUpTextComponent(
 }
 
 @Composable
-fun UnderlinedText(
+fun CustomizedTextButton(
     @StringRes textId: Int,
-    textColor: Color = Color.Black
+    onButtonClicked: () -> Unit
 ) {
-    Text(
-        text = stringResource(textId),
-        modifier = Modifier
-            .fillMaxWidth()
-            .heightIn(min = 40.dp)
-            .padding(vertical = dimensionResource(R.dimen.small_padding)),
-        style = MaterialTheme.typography.displayMedium,
-        textAlign = TextAlign.End,
-        textDecoration = TextDecoration.Underline,
-        color = textColor
-    )
+    TextButton(onClick = onButtonClicked) {
+        Text(
+            text = stringResource(textId),
+            modifier = Modifier
+                .fillMaxWidth()
+                .heightIn(min = 40.dp)
+                .padding(vertical = dimensionResource(R.dimen.small_padding)),
+            style = MaterialTheme.typography.displayMedium,
+            textAlign = TextAlign.End,
+            textDecoration = TextDecoration.Underline,
+            color = Color(0xff6789ba)
+        )
+    }
 }

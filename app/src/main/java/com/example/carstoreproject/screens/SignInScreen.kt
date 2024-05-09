@@ -19,7 +19,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
@@ -29,11 +28,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.carstoreproject.R
 import com.example.carstoreproject.components.ButtonComponent
+import com.example.carstoreproject.components.CustomizedTextButton
 import com.example.carstoreproject.components.CustomizedTextField
 import com.example.carstoreproject.components.LoginSignUpTextComponent
 import com.example.carstoreproject.components.LogoImage
 import com.example.carstoreproject.components.TextDivider
-import com.example.carstoreproject.components.UnderlinedText
 import com.example.carstoreproject.data.login.LoginUIEvent
 import com.example.carstoreproject.data.login.LoginViewModel
 import com.example.carstoreproject.navigation.AcceleratoRouter
@@ -57,7 +56,7 @@ fun SignInScreen(
                 modifier = Modifier.fillMaxSize()
             ) {
                 LogoImage(
-                    imageId = R.drawable.car_store_logo,
+                    imageId = R.drawable.accelerato_logo,
                     modifier = modifier
                 )
                 Text(
@@ -93,9 +92,11 @@ fun SignInScreen(
                     errorMessage = R.string.invalid_password,
                     showError = showError
                 )
-                UnderlinedText(
+                CustomizedTextButton(
                     textId = R.string.forgot_password,
-                    textColor = Color(0xff2596BE),
+                    onButtonClicked = {
+                        loginViewModel.onEvent(LoginUIEvent.ForgotPasswordButtonCLicked)
+                    }
                 )
                 ButtonComponent(
                     textId = R.string.log_in,

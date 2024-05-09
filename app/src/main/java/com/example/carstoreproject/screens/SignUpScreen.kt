@@ -61,7 +61,7 @@ fun SignUpScreen(
                 modifier = modifier.fillMaxSize()
             ) {
                 LogoImage(
-                    imageId = R.drawable.car_store_logo,
+                    imageId = R.drawable.accelerato_logo,
                     modifier = modifier
                 )
                 Text(

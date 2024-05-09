@@ -25,6 +25,6 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun GreetingPreview() {
     CarStoreProjectTheme {
-
+        CarStoreApp()
     }
 }
