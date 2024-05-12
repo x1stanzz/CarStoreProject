@@ -50,7 +50,7 @@ fun SignUpScreen(
     var showError by remember { mutableStateOf(false) }
 
     Box(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier.fillMaxSize().padding(dimensionResource(R.dimen.medium_padding)),
         contentAlignment = Alignment.Center
     ) {
         Surface(
