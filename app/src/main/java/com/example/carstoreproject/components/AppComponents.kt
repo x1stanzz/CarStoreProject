@@ -54,6 +54,7 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.carstoreproject.R
+import com.example.carstoreproject.animation.bounceClick
 
 @Composable
 fun LogoImage(
@@ -234,7 +235,8 @@ fun ButtonComponent(
         },
         modifier = Modifier
             .fillMaxWidth()
-            .heightIn(48.dp),
+            .heightIn(48.dp)
+            .bounceClick(),
         contentPadding = PaddingValues(),
         colors = ButtonDefaults.buttonColors(Color(0xff6789ba))
     ) {
