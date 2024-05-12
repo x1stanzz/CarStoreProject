@@ -36,7 +36,7 @@ import com.example.carstoreproject.components.TextDivider
 import com.example.carstoreproject.data.login.LoginUIEvent
 import com.example.carstoreproject.data.login.LoginViewModel
 import com.example.carstoreproject.navigation.AcceleratoRouter
-import com.example.carstoreproject.navigation.Screen
+import com.example.carstoreproject.navigation.AuthScreen
 
 @Composable
 fun SignInScreen(
@@ -112,7 +112,7 @@ fun SignInScreen(
                     initialTextId = R.string.not_registered_yet,
                     clickableTextId = R.string.create_an_account,
                     onTextSelected = {
-                        AcceleratoRouter.navigateTo(Screen.SignUpScreen)
+                        AcceleratoRouter.navigateTo(AuthScreen.SignUpAuthScreen)
                     }
                 )
             }

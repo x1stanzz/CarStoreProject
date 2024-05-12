@@ -7,7 +7,7 @@ import com.example.carstoreproject.data.rules.LogInValidationState
 import com.example.carstoreproject.data.rules.Validator
 import com.example.carstoreproject.data.signup.SignUpViewModel
 import com.example.carstoreproject.navigation.AcceleratoRouter
-import com.example.carstoreproject.navigation.Screen
+import com.example.carstoreproject.navigation.AuthScreen
 import com.google.firebase.auth.FirebaseAuth
 
 class LoginViewModel : ViewModel() {
@@ -43,7 +43,7 @@ class LoginViewModel : ViewModel() {
             }
 
             is LoginUIEvent.ForgotPasswordButtonCLicked -> {
-                AcceleratoRouter.navigateTo(Screen.ForgotPasswordScreen)
+                AcceleratoRouter.navigateTo(AuthScreen.ForgotPasswordAuthScreen)
             }
         }
     }
@@ -58,7 +58,7 @@ class LoginViewModel : ViewModel() {
                 Log.d(TAG, "Inside_onCompleteListener")
                 Log.d(TAG, "isSuccessful = ${it.isSuccessful}")
                 if(it.isSuccessful) {
-                    AcceleratoRouter.navigateTo(Screen.MainScreen)
+                    AcceleratoRouter.navigateTo(AuthScreen.MainAuthScreen)
                 }
             }
             .addOnFailureListener {

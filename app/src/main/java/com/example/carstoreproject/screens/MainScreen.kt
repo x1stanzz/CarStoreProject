@@ -1,6 +1,7 @@
 package com.example.carstoreproject.screens
 
 import android.annotation.SuppressLint
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Search
@@ -20,7 +21,12 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import com.example.carstoreproject.navigation.Screen
 
 data class BottomNavigationItem(
     val title: String,
@@ -31,6 +37,8 @@ data class BottomNavigationItem(
 fun MainScreen(
     modifier: Modifier = Modifier
 ) {
+    val navigationController = rememberNavController()
+    val context = LocalContext.current.applicationContext
     val items = listOf(
         BottomNavigationItem(
             title = "Home",
@@ -79,8 +87,25 @@ fun MainScreen(
                 }
             }
         }
-    ) {
+    ) {paddingValues ->
+        NavHost(
+            navController = navigationController,
+            startDestination = Screen.HomeScreen.route,
+            modifier = Modifier.padding(paddingValues)
+        ) {
+            composable(Screen.HomeScreen.route) {
 
+            }
+            composable(Screen.SearchScreen.route) {
+
+            }
+            composable(Screen.FavouriteScreen.route) {
+
+            }
+            composable(Screen.FavouriteScreen.route) {
+
+            }
+        }
     }
 }
 

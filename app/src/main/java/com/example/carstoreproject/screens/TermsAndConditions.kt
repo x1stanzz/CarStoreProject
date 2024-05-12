@@ -15,7 +15,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.carstoreproject.R
 import com.example.carstoreproject.navigation.AcceleratoRouter
-import com.example.carstoreproject.navigation.Screen
+import com.example.carstoreproject.navigation.AuthScreen
 import com.example.carstoreproject.navigation.SystemBackButtonHandler
 
 @Composable
@@ -33,7 +33,7 @@ fun TermsAndConditionsScreen() {
         )
 
         SystemBackButtonHandler {
-            AcceleratoRouter.navigateTo(Screen.SignUpScreen)
+            AcceleratoRouter.navigateTo(AuthScreen.SignUpAuthScreen)
         }
     }
 }

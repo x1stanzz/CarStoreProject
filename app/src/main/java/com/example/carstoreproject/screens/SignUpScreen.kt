@@ -39,7 +39,7 @@ import com.example.carstoreproject.components.TextDivider
 import com.example.carstoreproject.data.signup.SignUpUIEvent
 import com.example.carstoreproject.data.signup.SignUpViewModel
 import com.example.carstoreproject.navigation.AcceleratoRouter
-import com.example.carstoreproject.navigation.Screen
+import com.example.carstoreproject.navigation.AuthScreen
 
 @SuppressLint("StateFlowValueCalledInComposition")
 @Composable
@@ -136,7 +136,7 @@ fun SignUpScreen(
                 )
                 CheckboxComponent(
                     onTextSelected = {
-                        AcceleratoRouter.navigateTo(Screen.TermsAndConditionsScreen)
+                        AcceleratoRouter.navigateTo(AuthScreen.TermsAndConditionsAuthScreen)
                     },
                     onCheckedChange = {
                         signUpViewModel.onEvent(SignUpUIEvent.PrivacyPolicyCheckBoxClicked(it))
@@ -154,7 +154,7 @@ fun SignUpScreen(
                     initialTextId = R.string.have_an_account,
                     clickableTextId = R.string.log_in,
                     onTextSelected = {
-                        AcceleratoRouter.navigateTo(Screen.SignInScreen)
+                        AcceleratoRouter.navigateTo(AuthScreen.SignInAuthScreen)
                     }
                 )
             }

@@ -7,7 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import com.example.carstoreproject.navigation.AcceleratoRouter
-import com.example.carstoreproject.navigation.Screen
+import com.example.carstoreproject.navigation.AuthScreen
 import com.example.carstoreproject.screens.ForgotPasswordScreen
 import com.example.carstoreproject.screens.MainScreen
 import com.example.carstoreproject.screens.SignInScreen
@@ -22,21 +22,21 @@ fun CarStoreApp() {
         ,
         color = Color.White
     ) {
-        Crossfade(targetState = AcceleratoRouter.currentScreen) { currentState ->
+        Crossfade(targetState = AcceleratoRouter.currentAuthScreen) { currentState ->
             when(currentState.value) {
-                is Screen.SignUpScreen -> {
+                is AuthScreen.SignUpAuthScreen -> {
                     SignUpScreen()
                 }
-                is Screen.TermsAndConditionsScreen -> {
+                is AuthScreen.TermsAndConditionsAuthScreen -> {
                     TermsAndConditionsScreen()
                 }
-                is Screen.SignInScreen -> {
+                is AuthScreen.SignInAuthScreen -> {
                     SignInScreen()
                 }
-                is Screen.MainScreen -> {
+                is AuthScreen.MainAuthScreen -> {
                     MainScreen()
                 }
-                is Screen.ForgotPasswordScreen -> {
+                is AuthScreen.ForgotPasswordAuthScreen -> {
                     ForgotPasswordScreen()
                 }
             }

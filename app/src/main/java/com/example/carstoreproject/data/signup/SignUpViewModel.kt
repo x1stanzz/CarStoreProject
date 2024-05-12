@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import com.example.carstoreproject.data.rules.SignUpValidationState
 import com.example.carstoreproject.data.rules.Validator
 import com.example.carstoreproject.navigation.AcceleratoRouter
-import com.example.carstoreproject.navigation.Screen
+import com.example.carstoreproject.navigation.AuthScreen
 import com.google.firebase.auth.FirebaseAuth
 
 class SignUpViewModel : ViewModel() {
@@ -132,7 +132,7 @@ class SignUpViewModel : ViewModel() {
                 signUpInProgress.value = false
 
                 if(it.isSuccessful) {
-                    AcceleratoRouter.navigateTo(Screen.MainScreen)
+                    AcceleratoRouter.navigateTo(AuthScreen.MainAuthScreen)
                 }
             }
             .addOnFailureListener {
