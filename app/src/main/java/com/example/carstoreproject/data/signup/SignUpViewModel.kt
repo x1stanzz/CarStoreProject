@@ -132,7 +132,7 @@ class SignUpViewModel : ViewModel() {
                 signUpInProgress.value = false
 
                 if(it.isSuccessful) {
-                    AcceleratoRouter.navigateTo(Screen.HomeScreen)
+                    AcceleratoRouter.navigateTo(Screen.MainScreen)
                 }
             }
             .addOnFailureListener {

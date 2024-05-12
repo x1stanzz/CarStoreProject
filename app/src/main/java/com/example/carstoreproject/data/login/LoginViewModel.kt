@@ -58,7 +58,7 @@ class LoginViewModel : ViewModel() {
                 Log.d(TAG, "Inside_onCompleteListener")
                 Log.d(TAG, "isSuccessful = ${it.isSuccessful}")
                 if(it.isSuccessful) {
-                    AcceleratoRouter.navigateTo(Screen.HomeScreen)
+                    AcceleratoRouter.navigateTo(Screen.MainScreen)
                 }
             }
             .addOnFailureListener {

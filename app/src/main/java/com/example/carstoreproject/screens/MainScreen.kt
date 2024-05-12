@@ -8,7 +8,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 
 @Composable
-fun HomeScreen(
+fun MainScreen(
     modifier: Modifier = Modifier
 ) {
     Surface(
@@ -22,5 +22,5 @@ fun HomeScreen(
 @Preview
 @Composable
 fun HomeScreenPreview() {
-    HomeScreen()
+    MainScreen()
 }

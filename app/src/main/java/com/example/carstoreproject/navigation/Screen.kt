@@ -7,7 +7,7 @@ sealed class Screen {
     object SignUpScreen : Screen()
     object TermsAndConditionsScreen : Screen()
     object SignInScreen : Screen()
-    object HomeScreen : Screen()
+    object MainScreen : Screen()
     object ForgotPasswordScreen : Screen()
 }
 

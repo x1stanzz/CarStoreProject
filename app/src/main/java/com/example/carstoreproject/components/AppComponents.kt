@@ -277,7 +277,8 @@ fun TextDivider() {
 fun LoginSignUpTextComponent(
     @StringRes initialTextId: Int,
     @StringRes clickableTextId: Int,
-    onTextSelected: (String) -> Unit
+    onTextSelected: (String) -> Unit,
+    modifier: Modifier = Modifier
 ) {
     val initialText = stringResource(initialTextId)
     val loginText = stringResource(clickableTextId)

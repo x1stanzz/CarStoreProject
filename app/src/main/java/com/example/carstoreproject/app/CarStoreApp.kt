@@ -9,7 +9,7 @@ import androidx.compose.ui.graphics.Color
 import com.example.carstoreproject.navigation.AcceleratoRouter
 import com.example.carstoreproject.navigation.Screen
 import com.example.carstoreproject.screens.ForgotPasswordScreen
-import com.example.carstoreproject.screens.HomeScreen
+import com.example.carstoreproject.screens.MainScreen
 import com.example.carstoreproject.screens.SignInScreen
 import com.example.carstoreproject.screens.SignUpScreen
 import com.example.carstoreproject.screens.TermsAndConditionsScreen
@@ -33,8 +33,8 @@ fun CarStoreApp() {
                 is Screen.SignInScreen -> {
                     SignInScreen()
                 }
-                is Screen.HomeScreen -> {
-                    HomeScreen()
+                is Screen.MainScreen -> {
+                    MainScreen()
                 }
                 is Screen.ForgotPasswordScreen -> {
                     ForgotPasswordScreen()
