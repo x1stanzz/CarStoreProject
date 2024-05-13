@@ -30,7 +30,8 @@ import com.example.carstoreproject.navigation.Screen
 
 data class BottomNavigationItem(
     val title: String,
-    val icon: ImageVector
+    val icon: ImageVector,
+    val route: String
 )
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
@@ -42,22 +43,26 @@ fun MainScreen(
     val items = listOf(
         BottomNavigationItem(
             title = "Home",
-            icon = Icons.Filled.Home
+            icon = Icons.Filled.Home,
+            route = Screen.HomeScreen.route
         ),
         BottomNavigationItem(
             title = "Search",
-            icon = Icons.Filled.Search
+            icon = Icons.Filled.Search,
+            route = Screen.SearchScreen.route
         ),
         BottomNavigationItem(
             title = "Favorite",
-            icon = Icons.Filled.Star
+            icon = Icons.Filled.Star,
+            route = Screen.FavouriteScreen.route
         ),
         BottomNavigationItem(
             title = "Settings",
-            icon = Icons.Filled.Settings
+            icon = Icons.Filled.Settings,
+            route = Screen.SettingsScreen.route
         )
     )
-    var selectedItem by rememberSaveable { mutableStateOf(0)}
+    var selectedItem by rememberSaveable { mutableStateOf(0) }
     Scaffold(
         bottomBar = {
             NavigationBar(
@@ -68,6 +73,7 @@ fun MainScreen(
                         selected = selectedItem == index,
                         onClick = {
                             selectedItem = index
+                            navigationController.navigate(item.route)
                         },
                         icon = {
                             Icon(
@@ -94,16 +100,16 @@ fun MainScreen(
             modifier = Modifier.padding(paddingValues)
         ) {
             composable(Screen.HomeScreen.route) {
-
+                HomeScreen()
             }
             composable(Screen.SearchScreen.route) {
-
+                SearchScreen()
             }
             composable(Screen.FavouriteScreen.route) {
-
+                FavouriteScreen()
             }
-            composable(Screen.FavouriteScreen.route) {
-
+            composable(Screen.SettingsScreen.route) {
+                SettingsScreen()
             }
         }
     }
