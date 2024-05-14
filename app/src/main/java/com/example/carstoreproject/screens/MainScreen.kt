@@ -8,6 +8,7 @@ import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.NavigationBarItemDefaults
@@ -19,7 +20,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
@@ -67,7 +67,7 @@ fun MainScreen(
     Scaffold(
         bottomBar = {
             NavigationBar(
-                containerColor = Color(0xffe6e6e6)
+                containerColor = MaterialTheme.colorScheme.background
             ) {
                 items.forEachIndexed() { index, item ->
                     NavigationBarItem(
@@ -86,9 +86,9 @@ fun MainScreen(
                             Text(text = item.title)
                         },
                         colors = NavigationBarItemDefaults.colors(
-                            selectedIconColor = Color(0xff6789ba),
-                            selectedTextColor = Color(0xff6789ba),
-                            indicatorColor = Color(0xffe6e6e6)
+                            selectedIconColor = MaterialTheme.colorScheme.primary,
+                            selectedTextColor = MaterialTheme.colorScheme.primary,
+                            indicatorColor = MaterialTheme.colorScheme.background
                         )
                     )
                 }
@@ -101,7 +101,9 @@ fun MainScreen(
             modifier = Modifier.padding(paddingValues)
         ) {
             composable(Screen.HomeScreen.route) {
-                HomeScreen(viewModel = viewModel())
+                HomeScreen(
+                    carsViewModel = viewModel()
+                )
             }
             composable(Screen.SearchScreen.route) {
                 SearchScreen()
@@ -118,6 +120,6 @@ fun MainScreen(
 
 @Preview
 @Composable
-fun HomeScreenPreview() {
+fun MainScreenPreview() {
     MainScreen()
 }

@@ -37,13 +37,15 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -111,10 +113,10 @@ fun CustomizedTextField(
             singleLine = true,
             maxLines = 1,
             colors = OutlinedTextFieldDefaults.colors(
-                unfocusedBorderColor = Color(0xff6789ba),
-                focusedBorderColor = Color(0xff6789ba),
-                focusedLeadingIconColor = Color(0xff6789ba),
-                focusedLabelColor = Color(0xff6789ba)
+                unfocusedBorderColor = MaterialTheme.colorScheme.primary,
+                focusedBorderColor = MaterialTheme.colorScheme.primary,
+                focusedLeadingIconColor = MaterialTheme.colorScheme.primary,
+                focusedLabelColor = MaterialTheme.colorScheme.primary
             ),
             visualTransformation = if(isPassword) {
                 if (isVisible) {
@@ -195,7 +197,8 @@ fun CheckboxComponent(
 
 @Composable
 fun ClickableTextComponent(
-    onTextSelected: (String) -> Unit
+    onTextSelected: (String) -> Unit,
+    modifier: Modifier = Modifier
 ) {
     val initialText = "I have read and agree to the "
     val privacyPolicyText = "Privacy Policy "
@@ -203,12 +206,12 @@ fun ClickableTextComponent(
     val termsOfUseText = "Term of Use"
     val annotatedString = buildAnnotatedString {
         append(initialText)
-        withStyle(style = SpanStyle(color = Color(0xff6789ba), textDecoration = TextDecoration.Underline)) {
+        withStyle(style = SpanStyle(color = MaterialTheme.colorScheme.primary, textDecoration = TextDecoration.Underline)) {
             pushStringAnnotation(tag = privacyPolicyText, annotation = privacyPolicyText)
             append(privacyPolicyText)
         }
         append(andText)
-        withStyle(style = SpanStyle(color = Color(0xff6789ba), textDecoration = TextDecoration.Underline)) {
+        withStyle(style = SpanStyle(color = MaterialTheme.colorScheme.primary, textDecoration = TextDecoration.Underline)) {
             pushStringAnnotation(tag = termsOfUseText, annotation = termsOfUseText)
             append(termsOfUseText)
         }
@@ -221,13 +224,18 @@ fun ClickableTextComponent(
                     onTextSelected(span.item)
                 }
         }
-    })
+    },
+        style = TextStyle(
+            color = MaterialTheme.colorScheme.onSurface
+        )
+    )
 }
 
 @Composable
 fun ButtonComponent(
     @StringRes textId: Int,
-    onButtonClicked: () -> Unit
+    onButtonClicked: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
     Button(
         onClick = {
@@ -238,7 +246,7 @@ fun ButtonComponent(
             .heightIn(48.dp)
             .bounceClick(),
         contentPadding = PaddingValues(),
-        colors = ButtonDefaults.buttonColors(Color(0xff6789ba))
+        colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.primary)
     ) {
         Text(
             text = stringResource(textId)
@@ -256,20 +264,20 @@ fun TextDivider() {
             modifier = Modifier
                 .fillMaxWidth()
                 .weight(1f),
-            color = Color.Gray,
+            color = MaterialTheme.colorScheme.outline,
             thickness = 1.dp
         )
         Text(
             text = stringResource(R.string.or),
             fontSize = 18.sp,
-            color = Color.Gray,
+            color = MaterialTheme.colorScheme.outline,
             modifier = Modifier.padding(dimensionResource(R.dimen.medium_padding))
         )
         Divider(
             modifier = Modifier
                 .fillMaxWidth()
                 .weight(1f),
-            color = Color.Gray,
+            color = MaterialTheme.colorScheme.outline,
             thickness = 1.dp
         )
     }
@@ -286,14 +294,20 @@ fun LoginSignUpTextComponent(
     val loginText = stringResource(clickableTextId)
     val annotatedString = buildAnnotatedString {
         append("$initialText ")
-        withStyle(style = SpanStyle(color = Color(0xff6789ba), textDecoration = TextDecoration.Underline)) {
+        withStyle(style = SpanStyle(color = MaterialTheme.colorScheme.primary, textDecoration = TextDecoration.Underline)) {
             pushStringAnnotation(tag = loginText, annotation = loginText)
             append(loginText)
         }
     }
     ClickableText(
         modifier = Modifier.fillMaxWidth(),
-        style = MaterialTheme.typography.displayMedium,
+        style = TextStyle(
+            color = MaterialTheme.colorScheme.onSurface,
+            fontFamily = FontFamily.Default,
+            fontWeight = FontWeight.Normal,
+            fontSize = 16.sp,
+            textAlign = TextAlign.Center
+        ),
         text = annotatedString, onClick = { offset ->
         annotatedString.getStringAnnotations(offset, offset)
             .firstOrNull()?.let { span ->
@@ -320,7 +334,7 @@ fun CustomizedTextButton(
             style = MaterialTheme.typography.displayMedium,
             textAlign = TextAlign.End,
             textDecoration = TextDecoration.Underline,
-            color = Color(0xff6789ba)
+            color = MaterialTheme.colorScheme.primary
         )
     }
 }

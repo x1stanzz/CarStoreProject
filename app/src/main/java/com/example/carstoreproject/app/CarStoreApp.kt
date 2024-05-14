@@ -2,10 +2,10 @@ package com.example.carstoreproject.app
 
 import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import com.example.carstoreproject.navigation.AcceleratoRouter
 import com.example.carstoreproject.navigation.AuthScreen
 import com.example.carstoreproject.screens.ForgotPasswordScreen
@@ -20,7 +20,7 @@ fun CarStoreApp() {
         modifier = Modifier
             .fillMaxSize()
         ,
-        color = Color.White
+        color = MaterialTheme.colorScheme.background
     ) {
         Crossfade(targetState = AcceleratoRouter.currentAuthScreen) { currentState ->
             when(currentState.value) {
