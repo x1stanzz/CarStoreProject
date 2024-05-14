@@ -59,14 +59,14 @@ val Typography = Typography(
     titleMedium = TextStyle(
         fontFamily = PoppinsBold,
         fontWeight = FontWeight.Bold,
-        fontSize = 20.sp,
+        fontSize = 16.sp,
         lineHeight = 24.sp,
-        letterSpacing = 0.5.sp
+        letterSpacing = 0.5.sp,
     ),
     bodyMedium = TextStyle(
         fontFamily = PoppinsRegular,
         fontWeight = FontWeight.Normal,
-        fontSize = 16.sp,
+        fontSize = 12.sp,
         lineHeight = 24.sp,
         letterSpacing = 0.5.sp,
         color = Color.LightGray

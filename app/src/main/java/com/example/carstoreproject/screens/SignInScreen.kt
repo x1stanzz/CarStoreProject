@@ -2,6 +2,7 @@ package com.example.carstoreproject.screens
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -108,6 +109,7 @@ fun SignInScreen(
                     }
                 )
                 TextDivider()
+                Spacer(modifier = Modifier.weight(1f))
                 LoginSignUpTextComponent(
                     initialTextId = R.string.not_registered_yet,
                     clickableTextId = R.string.create_an_account,

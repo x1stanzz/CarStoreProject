@@ -3,6 +3,7 @@ package com.example.carstoreproject.screens
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -49,7 +50,9 @@ fun SignUpScreen(
     var showError by remember { mutableStateOf(false) }
 
     Box(
-        modifier = Modifier.fillMaxSize().padding(dimensionResource(R.dimen.medium_padding)),
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(dimensionResource(R.dimen.medium_padding)),
         contentAlignment = Alignment.Center
     ) {
         Surface(
@@ -149,6 +152,7 @@ fun SignUpScreen(
                     }
                 )
                 TextDivider()
+                Spacer(modifier = Modifier.weight(1f))
                 LoginSignUpTextComponent(
                     initialTextId = R.string.have_an_account,
                     clickableTextId = R.string.log_in,

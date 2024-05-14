@@ -21,11 +21,8 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults.topAppBarColors
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -33,34 +30,32 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 import com.example.carstoreproject.R
+import com.example.carstoreproject.components.SearchField
 import com.example.carstoreproject.data.viewmodels.CarsViewModel
 import com.example.carstoreproject.datastate.CarsDataState
 import com.example.carstoreproject.models.Car
 
-@OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun HomeScreen(
     carsViewModel: CarsViewModel
 ) {
-    Column {
-        TopAppBar(
-            title = { /*TODO*/ },
-            colors = topAppBarColors(
-                containerColor = MaterialTheme.colorScheme.background,
-                titleContentColor = MaterialTheme.colorScheme.primary
-            )
-        )
-        Column(
-            modifier = Modifier.padding(dimensionResource(R.dimen.medium_padding))
+    Column(
+        modifier = Modifier.padding(dimensionResource(R.dimen.medium_padding))
+    ) {
+        Row(
+            horizontalArrangement = Arrangement.Center,
+            modifier = Modifier.fillMaxWidth()
         ) {
-            SetData(viewModel = carsViewModel)
+            SearchField()
         }
+        SetData(viewModel = carsViewModel)
     }
 }
 
@@ -116,12 +111,13 @@ fun ShowBrands(
         style = MaterialTheme.typography.headlineSmall,
         modifier = Modifier.padding(dimensionResource(R.dimen.extra_small_padding))
     )
+    val uniqueCars = cars.distinctBy { it.brandLogo }
     LazyRow(
         contentPadding = PaddingValues(
             start = 0.dp,
             end = dimensionResource(R.dimen.small_padding))
     ) {
-        items(cars) { car ->
+        items(uniqueCars) { car ->
             Card(
                 modifier = Modifier
                     .size(64.dp)
@@ -173,7 +169,7 @@ fun ShowCars(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(dimensionResource(R.dimen.extra_small_padding))
-                    .height(150.dp)
+                    .height(180.dp)
             ) {
                 Row {
                     Box(
@@ -200,7 +196,8 @@ fun ShowCars(
                     ) {
                         Text(
                             text = car.name!!,
-                            style = MaterialTheme.typography.titleMedium
+                            style = MaterialTheme.typography.titleMedium,
+                            textAlign = TextAlign.End
                         )
                         Text(
                             text = car.year!!.toString(),

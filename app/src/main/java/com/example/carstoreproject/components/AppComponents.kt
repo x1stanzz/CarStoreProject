@@ -13,9 +13,11 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.ClickableText
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.outlined.Visibility
 import androidx.compose.material.icons.outlined.VisibilityOff
 import androidx.compose.material3.Button
@@ -97,7 +99,7 @@ fun CustomizedTextField(
             leadingIcon = {
                 Icon(
                     imageVector = icon,
-                    contentDescription = ""
+                    contentDescription = null
                 )
             },
             value = textValue,
@@ -337,4 +339,32 @@ fun CustomizedTextButton(
             color = MaterialTheme.colorScheme.primary
         )
     }
+}
+
+@Composable
+fun SearchField(
+    modifier: Modifier = Modifier
+) {
+    var textValue by remember { mutableStateOf("")}
+    OutlinedTextField(
+        leadingIcon = {
+            Icon(imageVector = Icons.Filled.Search, contentDescription = null)
+        },
+        value = textValue,
+        onValueChange = {
+            textValue = it
+        },
+        label = { Text(text = stringResource(R.string.search))},
+        keyboardOptions = KeyboardOptions(
+            keyboardType = KeyboardType.Text,
+            imeAction = ImeAction.Search
+        ),
+        colors = OutlinedTextFieldDefaults.colors(
+            unfocusedBorderColor = MaterialTheme.colorScheme.primary,
+            focusedBorderColor = MaterialTheme.colorScheme.primary,
+            focusedLeadingIconColor = MaterialTheme.colorScheme.primary,
+            focusedLabelColor = MaterialTheme.colorScheme.primary
+        ),
+        shape = CircleShape
+    )
 }
