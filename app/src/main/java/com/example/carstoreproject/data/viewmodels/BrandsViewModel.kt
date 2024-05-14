@@ -10,7 +10,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 
-class MainViewModel: ViewModel() {
+class BrandsViewModel: ViewModel() {
     val response: MutableState<DataState> = mutableStateOf(DataState.Empty)
 
     init {
@@ -20,7 +20,7 @@ class MainViewModel: ViewModel() {
     private fun fetchDataFromFirebase() {
         val tempList = mutableListOf<Brand>()
         response.value = DataState.Loading
-        FirebaseDatabase.getInstance().getReference("brand")
+        FirebaseDatabase.getInstance("https://carstoreproject-9d352-default-rtdb.europe-west1.firebasedatabase.app/").getReference("Brand")
             .addListenerForSingleValueEvent(object: ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     for(DataSnap in snapshot.children) {
@@ -35,6 +35,5 @@ class MainViewModel: ViewModel() {
                     response.value = DataState.Failure(error.message)
                 }
             })
-
     }
 }

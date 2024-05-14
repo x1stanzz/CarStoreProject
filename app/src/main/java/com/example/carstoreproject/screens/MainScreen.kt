@@ -23,6 +23,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -66,7 +67,7 @@ fun MainScreen(
     Scaffold(
         bottomBar = {
             NavigationBar(
-                containerColor = Color.White
+                containerColor = Color(0xffe6e6e6)
             ) {
                 items.forEachIndexed() { index, item ->
                     NavigationBarItem(
@@ -87,20 +88,20 @@ fun MainScreen(
                         colors = NavigationBarItemDefaults.colors(
                             selectedIconColor = Color(0xff6789ba),
                             selectedTextColor = Color(0xff6789ba),
-                            indicatorColor = Color.White
+                            indicatorColor = Color(0xffe6e6e6)
                         )
                     )
                 }
             }
         }
-    ) {paddingValues ->
+    ) { paddingValues ->
         NavHost(
             navController = navigationController,
             startDestination = Screen.HomeScreen.route,
             modifier = Modifier.padding(paddingValues)
         ) {
             composable(Screen.HomeScreen.route) {
-                HomeScreen()
+                HomeScreen(viewModel = viewModel())
             }
             composable(Screen.SearchScreen.route) {
                 SearchScreen()

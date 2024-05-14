@@ -97,7 +97,7 @@ fun SignInScreen(
                 CustomizedTextButton(
                     textId = R.string.forgot_password,
                     onButtonClicked = {
-                        loginViewModel.onEvent(LoginUIEvent.ForgotPasswordButtonCLicked)
+                        //loginViewModel.onEvent(LoginUIEvent.ForgotPasswordButtonCLicked)
                     }
                 )
                 ButtonComponent(
