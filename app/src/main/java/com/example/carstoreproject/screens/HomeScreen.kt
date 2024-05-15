@@ -2,6 +2,7 @@ package com.example.carstoreproject.screens
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -28,23 +29,27 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.example.carstoreproject.R
 import com.example.carstoreproject.components.SearchField
 import com.example.carstoreproject.data.viewmodels.CarsViewModel
 import com.example.carstoreproject.datastate.CarsDataState
 import com.example.carstoreproject.models.Car
+import com.example.carstoreproject.navigation.Screen
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun HomeScreen(
-    carsViewModel: CarsViewModel
+    carsViewModel: CarsViewModel,
+    navController: NavController
 ) {
     Column(
         modifier = Modifier.padding(dimensionResource(R.dimen.medium_padding))
@@ -55,13 +60,17 @@ fun HomeScreen(
         ) {
             SearchField()
         }
-        SetData(viewModel = carsViewModel)
+        SetData(
+            viewModel = carsViewModel,
+            navController = navController
+        )
     }
 }
 
 @Composable
 fun SetData(
     viewModel: CarsViewModel,
+    navController: NavController,
     modifier: Modifier = Modifier
     ) {
     when(val result = viewModel.response.value) {
@@ -71,7 +80,8 @@ fun SetData(
                 modifier = modifier
             )
             ShowCars(
-                cars = result.data
+                cars = result.data,
+                navController = navController
             )
         }
         is CarsDataState.Loading -> {
@@ -148,6 +158,7 @@ fun ShowBrands(
 @Composable
 fun ShowCars(
     cars: MutableList<Car>,
+    navController: NavController,
     modifier: Modifier = Modifier
 ) {
     Text(
@@ -170,6 +181,13 @@ fun ShowCars(
                     .fillMaxWidth()
                     .padding(dimensionResource(R.dimen.extra_small_padding))
                     .height(180.dp)
+                    .clickable {
+                        val brand = car.brand
+                        val carName = car.name
+                        val carPrice = car.price
+                        val carYear = car.year
+                        navController.navigate(Screen.CarDetailScreen.createRoute(car.brand!!, car.name!!, car.price!!, carYear!!))
+                    }
             ) {
                 Row {
                     Box(
@@ -234,6 +252,7 @@ fun ShowCars(
 @Composable
 fun HomeScreenPreview() {
     HomeScreen(
-        carsViewModel = viewModel()
+        carsViewModel = viewModel(),
+        navController = NavController(LocalContext.current.applicationContext)
     )
 }

@@ -24,9 +24,12 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
+import com.example.carstoreproject.data.viewmodels.CarsViewModel
 import com.example.carstoreproject.navigation.Screen
 
 data class BottomNavigationItem(
@@ -37,6 +40,7 @@ data class BottomNavigationItem(
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun MainScreen(
+    carsViewModel: CarsViewModel = viewModel(),
     modifier: Modifier = Modifier
 ) {
     val navigationController = rememberNavController()
@@ -102,7 +106,8 @@ fun MainScreen(
         ) {
             composable(Screen.HomeScreen.route) {
                 HomeScreen(
-                    carsViewModel = viewModel()
+                    carsViewModel = carsViewModel,
+                    navController = navigationController
                 )
             }
             composable(Screen.SearchScreen.route) {
@@ -114,6 +119,27 @@ fun MainScreen(
             composable(Screen.SettingsScreen.route) {
                 SettingsScreen()
             }
+            composable(
+                route = Screen.CarDetailScreen.route,
+                arguments = listOf(
+                    navArgument("brand") { type = NavType.StringType },
+                    navArgument("name") { type = NavType.StringType },
+                    navArgument("price") { type = NavType.IntType },
+                    navArgument("year") { type = NavType.IntType }
+                )
+            ) { backStackEntry ->
+                val brand = backStackEntry.arguments?.getString("brand")
+                val name = backStackEntry.arguments?.getString("name")
+                val price = backStackEntry.arguments?.getInt("price")
+                val year = backStackEntry.arguments?.getInt("year")
+                val selectedCar = carsViewModel.carsList
+                    .firstOrNull { car -> car.brand == brand && car.name == name && car.price == price && car.year == year }
+                if (selectedCar != null) {
+                    CarDetailScreen(
+                        car = selectedCar
+                    )
+                }
+            }
         }
     }
 }
@@ -121,5 +147,7 @@ fun MainScreen(
 @Preview
 @Composable
 fun MainScreenPreview() {
-    MainScreen()
+    MainScreen(
+        carsViewModel = viewModel()
+    )
 }

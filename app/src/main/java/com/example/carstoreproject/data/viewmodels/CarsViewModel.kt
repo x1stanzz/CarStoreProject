@@ -12,12 +12,13 @@ import com.google.firebase.database.ValueEventListener
 
 class CarsViewModel: ViewModel() {
     val response: MutableState<CarsDataState> = mutableStateOf(CarsDataState.Empty)
+    val carsList: MutableList<Car> = mutableListOf()
+
     init {
         fetchDataFromDatabase()
     }
 
     private fun fetchDataFromDatabase() {
-        val carsList = mutableListOf<Car>()
         response.value = CarsDataState.Loading
         FirebaseDatabase.getInstance("https://carstoreproject-9d352-default-rtdb.europe-west1.firebasedatabase.app/").getReference("Car")
             .addListenerForSingleValueEvent(object: ValueEventListener {
