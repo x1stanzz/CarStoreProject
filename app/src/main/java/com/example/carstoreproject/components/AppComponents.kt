@@ -365,6 +365,7 @@ fun SearchField(
             focusedLeadingIconColor = MaterialTheme.colorScheme.primary,
             focusedLabelColor = MaterialTheme.colorScheme.primary
         ),
-        shape = CircleShape
+        shape = CircleShape,
+        modifier = modifier
     )
 }

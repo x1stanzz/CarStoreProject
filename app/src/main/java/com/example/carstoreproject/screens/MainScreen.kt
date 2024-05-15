@@ -136,7 +136,8 @@ fun MainScreen(
                     .firstOrNull { car -> car.brand == brand && car.name == name && car.price == price && car.year == year }
                 if (selectedCar != null) {
                     CarDetailScreen(
-                        car = selectedCar
+                        car = selectedCar,
+                        navController = navigationController
                     )
                 }
             }

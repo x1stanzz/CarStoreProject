@@ -25,4 +25,10 @@
     <string name="brands">Brands</string>
     <string name="cars">Cars</string>
     <string name="search">Search</string>
+    <string name="max_speed">Max Speed</string>
+    <string name="kmh">kmh</string>
+    <string name="fuel_consumption">KMPL</string>
+    <string name="engine_capacity">Engine Size</string>
+    <string name="cc">cc</string>
+    <string name="number_of_seats">Seats</string>
 </resources>

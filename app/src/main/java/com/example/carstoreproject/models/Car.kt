@@ -7,4 +7,8 @@ class Car {
     val name: String? = null
     val price: Int? = null
     val year: Int? = null
+    val maxSpeed: Int? = null
+    val kmpl: Double? = null
+    val engineSize: Int? = null
+    val numberOfSeats: Int? = null
 }

@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
@@ -39,6 +40,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.example.carstoreproject.R
+import com.example.carstoreproject.components.LogoImage
 import com.example.carstoreproject.components.SearchField
 import com.example.carstoreproject.data.viewmodels.CarsViewModel
 import com.example.carstoreproject.datastate.CarsDataState
@@ -52,13 +54,21 @@ fun HomeScreen(
     navController: NavController
 ) {
     Column(
-        modifier = Modifier.padding(dimensionResource(R.dimen.medium_padding))
+        modifier = Modifier
+            .padding(dimensionResource(R.dimen.medium_padding))
+            .fillMaxWidth()
     ) {
+        LogoImage(
+            imageId = R.drawable.accelerato_logo,
+            modifier = Modifier
+                .width(200.dp)
+                .height(75.dp)
+                .align(Alignment.CenterHorizontally)
+        )
         Row(
-            horizontalArrangement = Arrangement.Center,
             modifier = Modifier.fillMaxWidth()
         ) {
-            SearchField()
+            SearchField(modifier = Modifier.fillMaxWidth())
         }
         SetData(
             viewModel = carsViewModel,
@@ -186,7 +196,14 @@ fun ShowCars(
                         val carName = car.name
                         val carPrice = car.price
                         val carYear = car.year
-                        navController.navigate(Screen.CarDetailScreen.createRoute(car.brand!!, car.name!!, car.price!!, carYear!!))
+                        navController.navigate(
+                            Screen.CarDetailScreen.createRoute(
+                                car.brand!!,
+                                car.name!!,
+                                car.price!!,
+                                carYear!!
+                            )
+                        )
                     }
             ) {
                 Row {
