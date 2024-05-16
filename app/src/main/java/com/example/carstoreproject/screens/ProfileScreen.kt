@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
+import androidx.compose.material3.Divider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Snackbar
 import androidx.compose.material3.Text
@@ -72,6 +73,7 @@ fun ProfileScreen(user: FirebaseUser?) {
                     modifier = Modifier.alignByBaseline()
                 )
             }
+            Divider(color = MaterialTheme.colorScheme.outline)
             Row(
                 horizontalArrangement = Arrangement.SpaceBetween,
                 modifier = Modifier
@@ -93,6 +95,7 @@ fun ProfileScreen(user: FirebaseUser?) {
                     modifier = Modifier.alignByBaseline()
                 )
             }
+            Divider(color = MaterialTheme.colorScheme.outline)
             Row(
                 horizontalArrangement = Arrangement.SpaceBetween,
                 modifier = Modifier
@@ -113,6 +116,7 @@ fun ProfileScreen(user: FirebaseUser?) {
                     modifier = Modifier.alignByBaseline()
                 )
             }
+            Divider(color = MaterialTheme.colorScheme.outline)
             Spacer(modifier = Modifier.weight(1f))
             Row(
                 modifier = Modifier.fillMaxWidth(),

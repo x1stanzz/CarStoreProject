@@ -18,6 +18,10 @@ val PoppinsRegular = FontFamily(
     Font(R.font.poppins_regular)
 )
 
+val PlayFairDisplayBold = FontFamily(
+    Font(R.font.playfairdisplay_bold)
+)
+
 val Typography = Typography(
     bodyLarge = TextStyle(
         fontFamily = FontFamily.Default,
@@ -51,7 +55,7 @@ val Typography = Typography(
         color = Color.Red
     ),
     headlineSmall = TextStyle(
-        fontFamily = PoppinsBold,
+        fontFamily = PlayFairDisplayBold,
         fontWeight = FontWeight.Bold,
         fontSize = 24.sp,
         letterSpacing = 0.5.sp
@@ -63,14 +67,6 @@ val Typography = Typography(
         lineHeight = 24.sp,
         letterSpacing = 0.5.sp,
     ),
-    bodySmall = TextStyle(
-        fontFamily = PoppinsRegular,
-        fontWeight = FontWeight.Normal,
-        fontSize = 12.sp,
-        lineHeight = 24.sp,
-        letterSpacing = 0.5.sp,
-        color = Color.LightGray
-    ),
     bodyMedium = TextStyle(
         fontFamily = PoppinsRegular,
         fontWeight = FontWeight.Normal,
@@ -80,7 +76,7 @@ val Typography = Typography(
         color = Color.LightGray
     ),
      headlineLarge = TextStyle(
-         fontFamily = PoppinsBold,
+         fontFamily = PlayFairDisplayBold,
          fontWeight = FontWeight.Bold,
          fontSize = 36.sp,
          lineHeight = 24.sp,
