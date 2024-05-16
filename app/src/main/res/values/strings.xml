@@ -32,4 +32,7 @@
     <string name="cc">cc</string>
     <string name="number_of_seats">Seats</string>
     <string name="profile">Profile</string>
+    <string name="save_changes">Save Changes</string>
+    <string name="dismiss">Dismiss</string>
+    <string name="change_saved">Changes have been saved</string>
 </resources>
