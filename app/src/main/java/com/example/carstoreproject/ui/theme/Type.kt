@@ -63,6 +63,14 @@ val Typography = Typography(
         lineHeight = 24.sp,
         letterSpacing = 0.5.sp,
     ),
+    bodySmall = TextStyle(
+        fontFamily = PoppinsRegular,
+        fontWeight = FontWeight.Normal,
+        fontSize = 12.sp,
+        lineHeight = 24.sp,
+        letterSpacing = 0.5.sp,
+        color = Color.LightGray
+    ),
     bodyMedium = TextStyle(
         fontFamily = PoppinsRegular,
         fontWeight = FontWeight.Normal,
@@ -70,5 +78,12 @@ val Typography = Typography(
         lineHeight = 24.sp,
         letterSpacing = 0.5.sp,
         color = Color.LightGray
-    )
+    ),
+     headlineLarge = TextStyle(
+         fontFamily = PoppinsBold,
+         fontWeight = FontWeight.Bold,
+         fontSize = 36.sp,
+         lineHeight = 24.sp,
+         letterSpacing = 0.5.sp,
+     )
 )

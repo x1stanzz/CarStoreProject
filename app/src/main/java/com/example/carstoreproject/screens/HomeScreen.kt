@@ -236,7 +236,7 @@ fun ShowCars(
                         )
                         Text(
                             text = car.year!!.toString(),
-                            style = MaterialTheme.typography.bodyMedium
+                            style = MaterialTheme.typography.bodySmall
                         )
                         AsyncImage(
                             model = car.brandLogo,

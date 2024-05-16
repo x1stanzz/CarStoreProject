@@ -3,9 +3,9 @@ package com.example.carstoreproject.screens
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Search
-import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -62,8 +62,8 @@ fun MainScreen(
             route = Screen.FavouriteScreen.route
         ),
         BottomNavigationItem(
-            title = "Settings",
-            icon = Icons.Filled.Settings,
+            title = "Profile",
+            icon = Icons.Filled.AccountCircle,
             route = Screen.SettingsScreen.route
         )
     )
@@ -117,7 +117,7 @@ fun MainScreen(
                 FavouriteScreen()
             }
             composable(Screen.SettingsScreen.route) {
-                SettingsScreen()
+                ProfileScreen(user = getCurrentUser())
             }
             composable(
                 route = Screen.CarDetailScreen.route,

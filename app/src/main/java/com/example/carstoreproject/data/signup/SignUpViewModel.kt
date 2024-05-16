@@ -5,9 +5,12 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import com.example.carstoreproject.data.rules.SignUpValidationState
 import com.example.carstoreproject.data.rules.Validator
+import com.example.carstoreproject.models.User
 import com.example.carstoreproject.navigation.AcceleratoRouter
 import com.example.carstoreproject.navigation.AuthScreen
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.UserProfileChangeRequest
+import com.google.firebase.database.FirebaseDatabase
 
 class SignUpViewModel : ViewModel() {
     private val TAG = SignUpViewModel::class.simpleName
@@ -69,7 +72,9 @@ class SignUpViewModel : ViewModel() {
         if(allValidationPassed.value)
             createUserInFirebase(
                 email = registrationUIState.value.email,
-                password = registrationUIState.value.password
+                password = registrationUIState.value.password,
+                firstName = registrationUIState.value.firstName,
+                lastName = registrationUIState.value.lastName
             )
     }
     private fun printState() {
@@ -120,7 +125,12 @@ class SignUpViewModel : ViewModel() {
                 && passwordResult && confirmPasswordResult && privacyPolicyResult
     }
 
-    private fun createUserInFirebase(email: String, password: String) {
+    private fun createUserInFirebase(
+        email: String,
+        password: String,
+        firstName: String,
+        lastName: String
+    ) {
         signUpInProgress.value = true
         FirebaseAuth
             .getInstance()
@@ -132,7 +142,23 @@ class SignUpViewModel : ViewModel() {
                 signUpInProgress.value = false
 
                 if(it.isSuccessful) {
-                    AcceleratoRouter.navigateTo(AuthScreen.MainAuthScreen)
+                    val user = FirebaseAuth.getInstance().currentUser
+                    user?.let {
+                        val displayName = "$firstName $lastName"
+                        val profileUpdates = UserProfileChangeRequest.Builder()
+                            .setDisplayName(displayName)
+                            .build()
+                        it.updateProfile(profileUpdates)
+                            .addOnCompleteListener { updateTask ->
+                                if(updateTask.isSuccessful) {
+                                    Log.d(TAG, "User profile updated.")
+                                    saveUserDetailsToDatabase(it.uid, firstName, lastName, email)
+                                    AcceleratoRouter.navigateTo(AuthScreen.MainAuthScreen)
+                                } else {
+                                    Log.d(TAG, "Failed to update user profile: ${updateTask.exception?.message}")
+                                }
+                            }
+                    }
                 }
             }
             .addOnFailureListener {
@@ -142,5 +168,13 @@ class SignUpViewModel : ViewModel() {
                 Log.d(TAG, "Exception = ${it.localizedMessage}")
             }
     }
+}
 
+private fun saveUserDetailsToDatabase(userId: String, firstName: String, lastName: String, email: String) {
+    val database = FirebaseDatabase.getInstance("https://carstoreproject-9d352-default-rtdb.europe-west1.firebasedatabase.app/")
+    val userRef = database.getReference("users").child(userId)
+
+    val user = User(firstName, lastName, email)
+
+    userRef.setValue(user)
 }
