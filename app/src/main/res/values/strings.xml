@@ -34,5 +34,6 @@
     <string name="profile">Profile</string>
     <string name="save_changes">Save Changes</string>
     <string name="dismiss">Dismiss</string>
+    <string name="change_profile_picture">Change profile picture</string>
     <string name="change_saved">Changes have been saved</string>
 </resources>

@@ -38,7 +38,7 @@ class UserViewModel: ViewModel() {
             })
         }
     }
-    fun updateUserData(firstName: String, lastName: String, email: String) {
+    fun updateUserData(firstName: String, lastName: String, email: String, imageUri: String) {
         val currentUser = FirebaseAuth.getInstance().currentUser
         if (currentUser != null) {
             val profileUpdates = UserProfileChangeRequest.Builder()
@@ -51,7 +51,7 @@ class UserViewModel: ViewModel() {
                         .addOnSuccessListener {
                             val database = FirebaseDatabase.getInstance("https://carstoreproject-9d352-default-rtdb.europe-west1.firebasedatabase.app/")
                             val userRef = database.getReference("users").child(currentUser.uid)
-                            val updateUser = User(firstName, lastName, email)
+                            val updateUser = User(firstName, lastName, email, imageUri)
 
                             userRef.setValue(updateUser)
                                 .addOnSuccessListener {
