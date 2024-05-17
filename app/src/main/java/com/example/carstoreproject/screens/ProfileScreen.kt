@@ -4,12 +4,13 @@ import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -32,7 +33,6 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.LastBaseline
 import androidx.compose.ui.res.dimensionResource
@@ -56,7 +56,7 @@ fun ProfileScreen(user: FirebaseUser?) {
     var firstName by remember { mutableStateOf("") }
     var lastName by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
-    var imageUri = rememberSaveable { mutableStateOf("")}
+    val imageUri = rememberSaveable { mutableStateOf("")}
     val painter = rememberAsyncImagePainter(
         if(imageUri.value.isEmpty()) {
             R.drawable.ic_profile
@@ -203,19 +203,23 @@ fun ProfileImage(
             modifier = Modifier
                 .padding(dimensionResource(R.dimen.small_padding))
                 .size(100.dp)
-                .background(Color.Transparent)
+                .clickable {
+                    launcher.launch("image/*")
+                    onImageChange()
+                }
         ) {
-            Image(
-                painter = painter,
-                contentDescription = null,
-                modifier = Modifier
-                    .wrapContentSize()
-                    .clickable {
-                        launcher.launch("image/*")
-                        onImageChange()
-                    },
-                contentScale = ContentScale.Crop
-            )
+            Box(
+                modifier = Modifier.size(100.dp)
+            ) {
+                Image(
+                    painter = painter,
+                    contentDescription = null,
+                    modifier = Modifier
+                        .wrapContentSize()
+                        .fillMaxSize(),
+                    contentScale = ContentScale.Crop
+                )
+            }
         }
         Text(
             text = stringResource(R.string.change_profile_picture),

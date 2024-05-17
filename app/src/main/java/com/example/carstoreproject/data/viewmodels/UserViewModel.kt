@@ -1,5 +1,6 @@
 package com.example.carstoreproject.data.viewmodels
 
+import android.net.Uri
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
@@ -10,6 +11,7 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.google.firebase.storage.FirebaseStorage
 
 class UserViewModel: ViewModel() {
     private val _user = mutableStateOf<User?>(null)
@@ -41,6 +43,28 @@ class UserViewModel: ViewModel() {
     fun updateUserData(firstName: String, lastName: String, email: String, imageUri: String) {
         val currentUser = FirebaseAuth.getInstance().currentUser
         if (currentUser != null) {
+            val storageRef = FirebaseStorage.getInstance("gs://carstoreproject-9d352.appspot.com").reference.child("profile_images/${currentUser.uid}")
+            val uploadTask = storageRef.putFile(Uri.parse(imageUri))
+            uploadTask.continueWithTask { task ->
+                if(!task.isSuccessful) {
+                    task.exception?.let {
+                        throw it
+                    }
+                }
+                storageRef.downloadUrl
+            }.addOnCompleteListener { task ->
+                if(task.isSuccessful) {
+                    val downloadUri = task.result
+                    val database = FirebaseDatabase.getInstance("https://carstoreproject-9d352-default-rtdb.europe-west1.firebasedatabase.app/")
+                    val userRef = database.getReference("users").child(currentUser.uid)
+                    val updateUser = User(firstName, lastName, email, downloadUri.toString())
+
+                    userRef.setValue(updateUser)
+                        .addOnSuccessListener {
+                            _user.value = updateUser
+                        }
+                }
+            }
             val profileUpdates = UserProfileChangeRequest.Builder()
                 .setDisplayName("$firstName $lastName")
                 .build()
