@@ -49,7 +49,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 
 @Composable
-fun ProfileScreen(user: FirebaseUser?) {
+fun ProfileScreen() {
     val userViewModel: UserViewModel = viewModel()
     val user by userViewModel.user
 
@@ -208,9 +208,7 @@ fun ProfileImage(
                     onImageChange()
                 }
         ) {
-            Box(
-                modifier = Modifier.size(100.dp)
-            ) {
+            Box() {
                 Image(
                     painter = painter,
                     contentDescription = null,

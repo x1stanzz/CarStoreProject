@@ -117,7 +117,7 @@ fun MainScreen(
                 FavouriteScreen()
             }
             composable(Screen.SettingsScreen.route) {
-                ProfileScreen(user = getCurrentUser())
+                ProfileScreen()
             }
             composable(
                 route = Screen.CarDetailScreen.route,

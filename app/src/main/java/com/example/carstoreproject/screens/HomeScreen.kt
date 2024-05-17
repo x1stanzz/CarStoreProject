@@ -146,7 +146,7 @@ fun ShowBrands(
                     .padding(dimensionResource(R.dimen.extra_small_padding))
                 ,
                 colors = CardDefaults.cardColors(
-                    containerColor = MaterialTheme.colorScheme.onSecondary
+                    containerColor = MaterialTheme.colorScheme.inverseOnSurface
                 ),
                 elevation = CardDefaults.cardElevation(
                     defaultElevation = 4.dp
@@ -184,7 +184,7 @@ fun ShowCars(
         cars.forEach() { car ->
             Card(
                 colors = CardDefaults.cardColors(
-                    containerColor = MaterialTheme.colorScheme.onSecondary
+                    containerColor = MaterialTheme.colorScheme.inverseOnSurface
                 ),
                 elevation = CardDefaults.cardElevation(
                     defaultElevation = 4.dp
