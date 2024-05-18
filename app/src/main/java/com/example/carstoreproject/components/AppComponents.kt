@@ -5,15 +5,19 @@ import android.util.Log
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.ClickableText
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
@@ -398,4 +402,36 @@ fun DataTextField(
         readOnly = isReadOnly,
         modifier = modifier
     )
+}
+
+@Composable
+fun SocialMediaAuthButton(
+    containerColor: Color,
+    contentColor: Color,
+    iconId: Int,
+    textId: Int
+) {
+    Button(
+        colors = ButtonDefaults.buttonColors(
+            containerColor = containerColor,
+            contentColor = contentColor
+        ),
+        modifier = Modifier,
+        shape = RoundedCornerShape(dimensionResource(R.dimen.small_padding)),
+        onClick = {  }
+    ) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Center,
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Image(
+                painter = painterResource(iconId),
+                contentDescription = null,
+                modifier = Modifier.size(15.dp)
+            )
+            Spacer(modifier = Modifier.width(dimensionResource(R.dimen.small_padding)))
+            Text(text = stringResource(textId))
+        }
+    }
 }

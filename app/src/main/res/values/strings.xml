@@ -16,6 +16,8 @@
     <string name="privacy_policy">I have read and agree to the Privacy Policy and Term of Use</string>
     <string name="terms_of_use_header">Terms of Use</string>
     <string name="or">or</string>
+    <string name="google_auth">Sign in with Google</string>
+    <string name="facebook_auth">Sign in with Facebook</string>
     <string name="have_an_account">Have an account?</string>
     <string name="name_field_error">Your name must consist of 2 characters or more</string>
     <string name="email_error">Invalid email</string>

@@ -22,6 +22,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
@@ -35,6 +36,7 @@ import com.example.carstoreproject.components.CheckboxComponent
 import com.example.carstoreproject.components.CustomizedTextField
 import com.example.carstoreproject.components.LoginSignUpTextComponent
 import com.example.carstoreproject.components.LogoImage
+import com.example.carstoreproject.components.SocialMediaAuthButton
 import com.example.carstoreproject.components.TextDivider
 import com.example.carstoreproject.data.signup.SignUpUIEvent
 import com.example.carstoreproject.data.signup.SignUpViewModel
@@ -152,6 +154,18 @@ fun SignUpScreen(
                     }
                 )
                 TextDivider()
+                SocialMediaAuthButton(
+                    containerColor = MaterialTheme.colorScheme.onBackground,
+                    contentColor = MaterialTheme.colorScheme.background,
+                    iconId = R.drawable.google_icon,
+                    textId = R.string.google_auth
+                )
+                SocialMediaAuthButton(
+                    containerColor = Color(0xFF1877F2),
+                    contentColor = MaterialTheme.colorScheme.background,
+                    iconId = R.drawable.facebook_icon,
+                    textId = R.string.facebook_auth
+                )
                 Spacer(modifier = Modifier.weight(1f))
                 LoginSignUpTextComponent(
                     initialTextId = R.string.have_an_account,
