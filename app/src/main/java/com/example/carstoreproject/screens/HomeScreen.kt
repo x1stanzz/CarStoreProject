@@ -229,12 +229,12 @@ fun ShowCars(
                             .weight(1f)
                             .padding(dimensionResource(R.dimen.small_padding))
                             .fillMaxHeight(),
-                        horizontalAlignment = Alignment.End
+                        horizontalAlignment = Alignment.Start
                     ) {
                         Text(
                             text = car.name!!,
                             style = MaterialTheme.typography.titleMedium,
-                            textAlign = TextAlign.End
+                            textAlign = TextAlign.Start
                         )
                         Text(
                             text = car.year!!.toString(),

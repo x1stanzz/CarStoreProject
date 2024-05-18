@@ -71,6 +71,10 @@ fun CarDetailScreen(
             style = MaterialTheme.typography.headlineLarge
         )
         CarCarousel(car = car)
+        Text(
+            text = stringResource(R.string.overview),
+            style = MaterialTheme.typography.headlineSmall
+        )
         CarSpecRow(car = car)
     }
 }
@@ -124,7 +128,9 @@ fun CarCarousel(car: Car) {
 @Composable
 fun CarSpecRow(car: Car) {
     Row(
-        modifier = Modifier.padding(vertical = dimensionResource(R.dimen.small_padding))
+        horizontalArrangement = Arrangement.SpaceBetween,
+        modifier = Modifier
+            .padding(vertical = dimensionResource(R.dimen.small_padding))
     ) {
         LazyRow(
             horizontalArrangement = Arrangement.spacedBy(dimensionResource(R.dimen.small_padding))
@@ -166,8 +172,8 @@ fun SpecificationCard(
             defaultElevation = 4.dp
         ),
         modifier = Modifier
-            .width(100.dp)
-            .height(100.dp)
+            .width(75.dp)
+            .height(75.dp)
     ) {
         Column(
             modifier = Modifier
@@ -179,12 +185,12 @@ fun SpecificationCard(
             Icon(
                 imageVector = icon,
                 contentDescription = null,
-                modifier = Modifier.size(45.dp)
+                modifier = Modifier.size(30.dp)
             )
 
             Text(
                 text = value,
-                style = MaterialTheme.typography.titleMedium,
+                style = MaterialTheme.typography.displaySmall,
                 textAlign = TextAlign.Center
             )
         }

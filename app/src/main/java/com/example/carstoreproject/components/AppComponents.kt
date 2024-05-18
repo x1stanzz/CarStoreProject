@@ -170,7 +170,8 @@ fun ShowErrorText(
 ) {
     Text(
         text = stringResource(textId),
-        style = MaterialTheme.typography.labelSmall,
+        style = MaterialTheme.typography.displaySmall,
+        color = Color.Red,
         modifier = modifier
     )
 }
