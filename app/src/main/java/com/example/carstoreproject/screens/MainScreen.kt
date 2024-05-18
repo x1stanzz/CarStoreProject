@@ -30,6 +30,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.carstoreproject.data.viewmodels.CarsViewModel
+import com.example.carstoreproject.data.viewmodels.UserViewModel
 import com.example.carstoreproject.navigation.Screen
 
 data class BottomNavigationItem(
@@ -41,6 +42,7 @@ data class BottomNavigationItem(
 @Composable
 fun MainScreen(
     carsViewModel: CarsViewModel = viewModel(),
+    userViewModel: UserViewModel = viewModel(),
     modifier: Modifier = Modifier
 ) {
     val navigationController = rememberNavController()
@@ -107,14 +109,19 @@ fun MainScreen(
             composable(Screen.HomeScreen.route) {
                 HomeScreen(
                     carsViewModel = carsViewModel,
-                    navController = navigationController
+                    navController = navigationController,
+                    userViewModel = userViewModel
                 )
             }
             composable(Screen.SearchScreen.route) {
                 SearchScreen()
             }
             composable(Screen.FavouriteScreen.route) {
-                FavouriteScreen()
+                FavouriteScreen(
+                    userViewModel = userViewModel,
+                    carsViewModel = carsViewModel,
+                    navController = navigationController
+                )
             }
             composable(Screen.SettingsScreen.route) {
                 ProfileScreen()

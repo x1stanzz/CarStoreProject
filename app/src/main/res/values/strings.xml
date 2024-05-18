@@ -26,12 +26,14 @@
     <string name="cars">Cars</string>
     <string name="search">Search</string>
     <string name="details">Details</string>
+    <string name="overview">Overview</string>
     <string name="max_speed">Max Speed</string>
     <string name="kmh">km/h</string>
     <string name="fuel_consumption">KMPL</string>
     <string name="engine_capacity">Engine Size</string>
     <string name="cc">cc</string>
     <string name="number_of_seats">Seats</string>
+    <string name="favorites">Favorites</string>
     <string name="profile">Profile</string>
     <string name="save_changes">Save Changes</string>
     <string name="dismiss">Dismiss</string>

@@ -40,6 +40,26 @@ class UserViewModel: ViewModel() {
             })
         }
     }
+
+    fun toggleFavoriteCar(carName: String) {
+        val uid = FirebaseAuth.getInstance().currentUser?.uid
+        val database = FirebaseDatabase.getInstance("https://carstoreproject-9d352-default-rtdb.europe-west1.firebasedatabase.app/")
+        val userRef = database.getReference("users").child(uid!!)
+
+        _user.value?.let { user ->
+            val updatedFavorites = user.favoriteCars.toMutableList().apply {
+                if (contains(carName)) remove(carName) else add(carName)
+            }
+            val updatedUser = user.copy(favoriteCars = updatedFavorites)
+            userRef.setValue(updatedUser).addOnSuccessListener {
+                _user.value = updatedUser
+            }
+        }
+    }
+
+    fun isFavorite(carName: String): Boolean {
+        return _user.value?.favoriteCars?.contains(carName) == true
+    }
     fun updateUserData(firstName: String, lastName: String, email: String, imageUri: String) {
         val currentUser = FirebaseAuth.getInstance().currentUser
         if (currentUser != null) {

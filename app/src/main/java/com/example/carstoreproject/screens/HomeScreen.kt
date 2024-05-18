@@ -21,15 +21,21 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Star
+import androidx.compose.material.icons.outlined.StarOutline
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
@@ -44,6 +50,7 @@ import com.example.carstoreproject.R
 import com.example.carstoreproject.components.LogoImage
 import com.example.carstoreproject.components.SearchField
 import com.example.carstoreproject.data.viewmodels.CarsViewModel
+import com.example.carstoreproject.data.viewmodels.UserViewModel
 import com.example.carstoreproject.datastate.CarsDataState
 import com.example.carstoreproject.models.Car
 import com.example.carstoreproject.navigation.Screen
@@ -52,6 +59,7 @@ import com.example.carstoreproject.navigation.Screen
 @Composable
 fun HomeScreen(
     carsViewModel: CarsViewModel,
+    userViewModel: UserViewModel,
     navController: NavController
 ) {
     Column(
@@ -74,7 +82,8 @@ fun HomeScreen(
         }
         SetData(
             viewModel = carsViewModel,
-            navController = navController
+            navController = navController,
+            userViewModel = userViewModel,
         )
     }
 }
@@ -83,6 +92,7 @@ fun HomeScreen(
 fun SetData(
     viewModel: CarsViewModel,
     navController: NavController,
+    userViewModel: UserViewModel,
     modifier: Modifier = Modifier
     ) {
     when(val result = viewModel.response.value) {
@@ -93,7 +103,8 @@ fun SetData(
             )
             ShowCars(
                 cars = result.data,
-                navController = navController
+                navController = navController,
+                userViewModel = userViewModel
             )
         }
         is CarsDataState.Loading -> {
@@ -171,6 +182,7 @@ fun ShowBrands(
 fun ShowCars(
     cars: MutableList<Car>,
     navController: NavController,
+    userViewModel: UserViewModel,
     modifier: Modifier = Modifier
 ) {
     Text(
@@ -182,84 +194,112 @@ fun ShowCars(
         verticalArrangement = Arrangement.spacedBy(dimensionResource(R.dimen.small_padding))
     ) {
         cars.forEach() { car ->
-            Card(
-                colors = CardDefaults.cardColors(
-                    containerColor = MaterialTheme.colorScheme.inverseOnSurface
-                ),
-                elevation = CardDefaults.cardElevation(
-                    defaultElevation = 4.dp
-                ),
+            CarCard(
+                car = car,
+                navController = navController,
+                isFavorite = userViewModel.isFavorite(car.name!!),
+                onFavoriteClick = { userViewModel.toggleFavoriteCar(it) }
+            )
+        }
+    }
+}
+
+@Composable
+fun CarCard(
+    car: Car,
+    navController: NavController,
+    onFavoriteClick: (String) -> Unit,
+    isFavorite: Boolean
+) {
+    Card(
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.inverseOnSurface
+        ),
+        elevation = CardDefaults.cardElevation(
+            defaultElevation = 4.dp
+        ),
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(dimensionResource(R.dimen.extra_small_padding))
+            .height(180.dp)
+            .clickable {
+                val brand = car.brand
+                val carName = car.name
+                val carPrice = car.price
+                val carYear = car.year
+                navController.navigate(
+                    Screen.CarDetailScreen.createRoute(
+                        car.brand!!,
+                        car.name!!,
+                        car.price!!,
+                        carYear!!
+                    )
+                )
+            }
+    ) {
+        Row {
+            Box(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(dimensionResource(R.dimen.extra_small_padding))
-                    .height(180.dp)
-                    .clickable {
-                        val brand = car.brand
-                        val carName = car.name
-                        val carPrice = car.price
-                        val carYear = car.year
-                        navController.navigate(
-                            Screen.CarDetailScreen.createRoute(
-                                car.brand!!,
-                                car.name!!,
-                                car.price!!,
-                                carYear!!
-                            )
-                        )
-                    }
+                    .weight(1f)
+                    .fillMaxHeight(),
+                contentAlignment = Alignment.Center,
             ) {
-                Row {
+                AsyncImage(
+                    model = car.image,
+                    contentDescription = car.name,
+                    contentScale = ContentScale.FillWidth,
+                    modifier = Modifier
+                        .height(120.dp),
+                    alignment = Alignment.Center
+                )
+            }
+            Column(
+                modifier = Modifier
+                    .weight(1f)
+                    .padding(dimensionResource(R.dimen.small_padding))
+                    .fillMaxHeight(),
+                horizontalAlignment = Alignment.Start
+            ) {
+                Text(
+                    text = car.name!!,
+                    style = MaterialTheme.typography.titleMedium,
+                    textAlign = TextAlign.Start
+                )
+                Text(
+                    text = car.year!!.toString(),
+                    style = MaterialTheme.typography.bodySmall
+                )
+                AsyncImage(
+                    model = car.brandLogo,
+                    contentDescription = car.brand,
+                    modifier = Modifier
+                        .height(40.dp)
+                        .padding(top = dimensionResource(R.dimen.small_padding))
+                )
+                Spacer(modifier = Modifier.weight(1f))
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
                     Box(
                         modifier = Modifier
-                            .weight(1f)
-                            .fillMaxHeight(),
-                        contentAlignment = Alignment.Center,
-                    ){
-                        AsyncImage(
-                            model = car.image,
-                            contentDescription = car.name,
-                            contentScale = ContentScale.FillWidth,
-                            modifier = Modifier
-                                .height(120.dp),
-                            alignment = Alignment.Center
-                        )
-                    }
-                    Column(
-                        modifier = Modifier
-                            .weight(1f)
-                            .padding(dimensionResource(R.dimen.small_padding))
-                            .fillMaxHeight(),
-                        horizontalAlignment = Alignment.Start
-                    ) {
-                        Text(
-                            text = car.name!!,
-                            style = MaterialTheme.typography.titleMedium,
-                            textAlign = TextAlign.Start
-                        )
-                        Text(
-                            text = car.year!!.toString(),
-                            style = MaterialTheme.typography.bodySmall
-                        )
-                        AsyncImage(
-                            model = car.brandLogo,
-                            contentDescription = car.brand,
-                            modifier = Modifier
-                                .height(40.dp)
-                                .padding(top = dimensionResource(R.dimen.small_padding))
-                        )
-                        Spacer(modifier = Modifier.weight(1f))
-                        Box(modifier = Modifier
                             .clip(RoundedCornerShape(8.dp))
                             .background(MaterialTheme.colorScheme.primary)
-                        ) {
-                            Text(
-                                text = "$${car.price!!}",
-                                style = MaterialTheme.typography.bodyMedium,
-                                color = MaterialTheme.colorScheme.onSecondary,
-                                modifier = Modifier
-                                    .padding(dimensionResource(R.dimen.small_padding))
-                            )
-                        }
+                    ) {
+                        Text(
+                            text = "$${car.price!!}",
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = MaterialTheme.colorScheme.onSecondary,
+                            modifier = Modifier
+                                .padding(dimensionResource(R.dimen.small_padding))
+                        )
+                    }
+                    IconButton(onClick = { onFavoriteClick(car.name) }) {
+                        Icon(
+                            imageVector = if (isFavorite) Icons.Default.Star else Icons.Outlined.StarOutline,
+                            contentDescription = "Favorite",
+                            tint = Color(0XFFFFDF00)
+                        )
                     }
                 }
             }
@@ -272,6 +312,7 @@ fun ShowCars(
 fun HomeScreenPreview() {
     HomeScreen(
         carsViewModel = viewModel(),
-        navController = NavController(LocalContext.current.applicationContext)
+        navController = NavController(LocalContext.current.applicationContext),
+        userViewModel = viewModel()
     )
 }
