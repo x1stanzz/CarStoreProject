@@ -16,7 +16,6 @@ import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.ClickableText
 import androidx.compose.foundation.text.KeyboardOptions
@@ -30,7 +29,6 @@ import androidx.compose.material3.Checkbox
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
@@ -374,30 +372,32 @@ fun SearchField(
             focusedLeadingIconColor = MaterialTheme.colorScheme.primary,
             focusedLabelColor = MaterialTheme.colorScheme.primary
         ),
-        shape = CircleShape,
         modifier = modifier
     )
 }
 
 @Composable
 fun DataTextField(
+    icon: ImageVector,
     data: String,
     onValueChange: (String) -> Unit,
     isReadOnly: Boolean,
     modifier: Modifier = Modifier
 ) {
     TextField(
+        leadingIcon = {
+            Icon(imageVector = icon, contentDescription = null)
+        },
         value = data,
         onValueChange = onValueChange,
         colors = TextFieldDefaults.colors(
-            unfocusedContainerColor = MaterialTheme.colorScheme.background,
-            focusedContainerColor = MaterialTheme.colorScheme.background,
+            unfocusedContainerColor = MaterialTheme.colorScheme.inverseOnSurface,
+            focusedContainerColor = MaterialTheme.colorScheme.inverseOnSurface,
             unfocusedIndicatorColor = Color.Transparent
         ),
         keyboardOptions = KeyboardOptions(
             imeAction = ImeAction.Done
         ),
-        textStyle = LocalTextStyle.current.copy(textAlign = TextAlign.End),
         singleLine = true,
         readOnly = isReadOnly,
         modifier = modifier

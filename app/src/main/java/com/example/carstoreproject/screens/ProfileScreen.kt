@@ -16,9 +16,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Email
+import androidx.compose.material.icons.outlined.Person
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
-import androidx.compose.material3.Divider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Snackbar
 import androidx.compose.material3.Text
@@ -34,7 +36,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.layout.LastBaseline
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -83,71 +84,55 @@ fun ProfileScreen() {
         }
         user?.let {
             Row(
-                horizontalArrangement = Arrangement.SpaceBetween,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(vertical = dimensionResource(R.dimen.medium_padding))
+                    .padding(vertical = dimensionResource(R.dimen.extra_small_padding))
 
             ) {
-                Text(
-                    text = "First Name:",
-                    style = MaterialTheme.typography.bodyLarge,
-                    modifier = Modifier.alignByBaseline()
-                )
                 DataTextField(
+                    icon = Icons.Outlined.Person,
                     data = firstName,
                     onValueChange = {
                         firstName = it
                         isModified = true
                     },
                     isReadOnly = false,
-                    modifier = Modifier.alignByBaseline()
+                    modifier = Modifier.fillMaxWidth()
                 )
             }
-            Divider(color = MaterialTheme.colorScheme.outline)
             Row(
                 horizontalArrangement = Arrangement.SpaceBetween,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(vertical = dimensionResource(R.dimen.medium_padding))
+                    .padding(vertical = dimensionResource(R.dimen.extra_small_padding))
             ) {
-                Text(
-                    text = "Last Name:",
-                    style = MaterialTheme.typography.bodyLarge,
-                    modifier = Modifier.alignBy(LastBaseline)
-                )
                 DataTextField(
+                    icon = Icons.Outlined.Person,
                     data = lastName,
                     onValueChange = {
                         lastName = it
                         isModified = true
                     },
                     isReadOnly = false,
-                    modifier = Modifier.alignByBaseline()
+                    modifier = Modifier.fillMaxWidth()
                 )
             }
-            Divider(color = MaterialTheme.colorScheme.outline)
             Row(
                 horizontalArrangement = Arrangement.SpaceBetween,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(vertical = dimensionResource(R.dimen.medium_padding))
+                    .padding(vertical = dimensionResource(R.dimen.extra_small_padding))
             ) {
-                Text(
-                    text = "Email:",
-                    style = MaterialTheme.typography.bodyLarge,
-                    modifier = Modifier.alignBy(LastBaseline)
-                )
                 DataTextField(
+                    icon = Icons.Outlined.Email,
                     data = email,
                     onValueChange = {
                         email = it
                     },
                     isReadOnly = true,
-                    modifier = Modifier.alignByBaseline()
+                    modifier = Modifier.fillMaxWidth()
                 )
             }
-            Divider(color = MaterialTheme.colorScheme.outline)
             Spacer(modifier = Modifier.weight(1f))
             Row(
                 modifier = Modifier.fillMaxWidth(),

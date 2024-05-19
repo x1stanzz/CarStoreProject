@@ -49,7 +49,7 @@ val Typography = Typography(
         textAlign = TextAlign.Center
     ),
     headlineSmall = TextStyle(
-        fontFamily = PlayFairDisplayBold,
+        fontFamily = PoppinsBold,
         fontWeight = FontWeight.Bold,
         fontSize = 24.sp,
         letterSpacing = 0.5.sp
@@ -70,9 +70,9 @@ val Typography = Typography(
         color = Color.LightGray
     ),
      headlineLarge = TextStyle(
-         fontFamily = PlayFairDisplayBold,
+         fontFamily = PoppinsBold,
          fontWeight = FontWeight.Bold,
-         fontSize = 36.sp,
+         fontSize = 28.sp,
          lineHeight = 24.sp,
          letterSpacing = 0.5.sp,
      )

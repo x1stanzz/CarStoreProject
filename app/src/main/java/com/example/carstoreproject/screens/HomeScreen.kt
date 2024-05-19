@@ -216,8 +216,9 @@ fun CarCard(
             containerColor = MaterialTheme.colorScheme.inverseOnSurface
         ),
         elevation = CardDefaults.cardElevation(
-            defaultElevation = 4.dp
+            defaultElevation = 8.dp
         ),
+        shape = RoundedCornerShape(12.dp),
         modifier = Modifier
             .fillMaxWidth()
             .padding(dimensionResource(R.dimen.extra_small_padding))
@@ -279,7 +280,8 @@ fun CarCard(
                 Spacer(modifier = Modifier.weight(1f))
                 Row(
                     modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
                 ) {
                     Box(
                         modifier = Modifier
@@ -298,7 +300,8 @@ fun CarCard(
                         Icon(
                             imageVector = if (isFavorite) Icons.Default.Star else Icons.Outlined.StarOutline,
                             contentDescription = "Favorite",
-                            tint = Color(0XFFFFDF00)
+                            tint = Color(0xFFE5B80B),
+                            modifier = Modifier.size(36.dp)
                         )
                     }
                 }

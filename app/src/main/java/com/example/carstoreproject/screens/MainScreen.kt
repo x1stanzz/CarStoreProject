@@ -27,6 +27,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.carstoreproject.data.viewmodels.CarsViewModel
@@ -70,33 +71,37 @@ fun MainScreen(
         )
     )
     var selectedItem by rememberSaveable { mutableStateOf(0) }
+    val navBackStackEntry by navigationController.currentBackStackEntryAsState()
+    val currentRoute = navBackStackEntry?.destination?.route
     Scaffold(
         bottomBar = {
-            NavigationBar(
-                containerColor = MaterialTheme.colorScheme.background
-            ) {
-                items.forEachIndexed() { index, item ->
-                    NavigationBarItem(
-                        selected = selectedItem == index,
-                        onClick = {
-                            selectedItem = index
-                            navigationController.navigate(item.route)
-                        },
-                        icon = {
-                            Icon(
-                                imageVector = item.icon,
-                                contentDescription = item.title
+            if (currentRoute != Screen.CarDetailScreen.route) {
+                NavigationBar(
+                    containerColor = MaterialTheme.colorScheme.background
+                ) {
+                    items.forEachIndexed() { index, item ->
+                        NavigationBarItem(
+                            selected = selectedItem == index,
+                            onClick = {
+                                selectedItem = index
+                                navigationController.navigate(item.route)
+                            },
+                            icon = {
+                                Icon(
+                                    imageVector = item.icon,
+                                    contentDescription = item.title
+                                )
+                            },
+                            label = {
+                                Text(text = item.title)
+                            },
+                            colors = NavigationBarItemDefaults.colors(
+                                selectedIconColor = MaterialTheme.colorScheme.primary,
+                                selectedTextColor = MaterialTheme.colorScheme.primary,
+                                indicatorColor = MaterialTheme.colorScheme.background
                             )
-                        },
-                        label = {
-                            Text(text = item.title)
-                        },
-                        colors = NavigationBarItemDefaults.colors(
-                            selectedIconColor = MaterialTheme.colorScheme.primary,
-                            selectedTextColor = MaterialTheme.colorScheme.primary,
-                            indicatorColor = MaterialTheme.colorScheme.background
                         )
-                    )
+                    }
                 }
             }
         }

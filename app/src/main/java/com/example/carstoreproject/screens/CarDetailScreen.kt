@@ -60,16 +60,21 @@ fun CarDetailScreen(
             .padding(dimensionResource(R.dimen.medium_padding))
             .verticalScroll(rememberScrollState())
     ) {
-        IconButton(onClick = { navController.popBackStack() }) {
-            Icon(
-                imageVector = Icons.Filled.ArrowBackIosNew,
-                contentDescription = null
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            IconButton(onClick = { navController.popBackStack() }) {
+                Icon(
+                    imageVector = Icons.Filled.ArrowBackIosNew,
+                    contentDescription = null
+                )
+            }
+            Text(
+                text = car.name!!,
+                style = MaterialTheme.typography.headlineLarge
             )
         }
-        Text(
-            text = car.name!!,
-            style = MaterialTheme.typography.headlineLarge
-        )
         CarCarousel(car = car)
         Text(
             text = stringResource(R.string.overview),
