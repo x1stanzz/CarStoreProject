@@ -153,6 +153,20 @@ fun MainScreen(
                     )
                 }
             }
+            composable(
+                route = Screen.BrandCarsScreen.route,
+                arguments = listOf(navArgument("brand") {type = NavType.StringType} )
+                ) {backStackEntry ->
+                val brand = backStackEntry.arguments?.getString("brand")
+                if(brand != null) {
+                    BrandScreen(
+                        brand = brand,
+                        carsViewModel = carsViewModel,
+                        navController = navigationController,
+                        userViewModel = userViewModel
+                    )
+                }
+            }
         }
     }
 }

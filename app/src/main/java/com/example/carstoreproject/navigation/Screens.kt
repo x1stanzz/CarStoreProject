@@ -15,4 +15,7 @@ sealed class Screen (
             year: Int
         ) = "car_detail/$brand/$name/$price/$year"
     }
+    object BrandCarsScreen : Screen(route = "brand_cars/{brand}") {
+        fun createRoute(brand: String) = "brand_cars/$brand"
+    }
 }

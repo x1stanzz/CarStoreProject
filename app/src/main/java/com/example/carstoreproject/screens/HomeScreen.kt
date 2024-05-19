@@ -96,6 +96,7 @@ fun SetData(
         is CarsDataState.Success -> {
             ShowBrands(
                 result.data,
+                navController = navController,
                 modifier = modifier
             )
             ShowCars(
@@ -134,6 +135,7 @@ fun SetData(
 @Composable
 fun ShowBrands(
     cars: MutableList<Car>,
+    navController: NavController,
     modifier: Modifier = Modifier
     ) {
     Text(
@@ -152,6 +154,9 @@ fun ShowBrands(
                 modifier = Modifier
                     .size(64.dp)
                     .padding(dimensionResource(R.dimen.extra_small_padding))
+                    .clickable {
+                        navController.navigate(Screen.BrandCarsScreen.createRoute(car.brand!!))
+                    }
                 ,
                 colors = CardDefaults.cardColors(
                     containerColor = MaterialTheme.colorScheme.inverseOnSurface
