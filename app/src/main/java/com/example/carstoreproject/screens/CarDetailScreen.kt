@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -27,6 +28,9 @@ import androidx.compose.material.icons.filled.EventSeat
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.LocalGasStation
 import androidx.compose.material.icons.filled.Speed
+import androidx.compose.material.icons.filled.Star
+import androidx.compose.material.icons.outlined.StarOutline
+import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
@@ -47,13 +51,16 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.example.carstoreproject.R
+import com.example.carstoreproject.data.viewmodels.UserViewModel
 import com.example.carstoreproject.models.Car
 
 @Composable
 fun CarDetailScreen(
     car: Car,
-    navController: NavController
+    navController: NavController,
+    userViewModel: UserViewModel
 ) {
+    val isFavorite = userViewModel.isFavorite(car.name!!)
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -71,27 +78,43 @@ fun CarDetailScreen(
                 )
             }
             Text(
-                text = car.name!!,
+                text = car.name,
                 style = MaterialTheme.typography.headlineLarge
             )
         }
-        CarCarousel(car = car)
+        CarCarousel(
+            car = car,
+            modifier = Modifier.padding(vertical = dimensionResource(R.dimen.medium_padding))
+        )
         Text(
             text = stringResource(R.string.overview),
             style = MaterialTheme.typography.headlineSmall
         )
-        CarSpecRow(car = car)
+        CarSpecRow(
+            car = car
+        )
+        Row(
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            FavoriteButton(
+                onFavoriteClick = { userViewModel.toggleFavoriteCar(car.name) },
+                isFavorite = isFavorite
+            )
+        }
     }
 }
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun CarCarousel(car: Car) {
+fun CarCarousel(
+    car: Car,
+    modifier: Modifier = Modifier
+) {
     val pagerState = rememberPagerState(pageCount = {
         car.images?.size ?: 0
     })
     Box(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .aspectRatio(1.6f)
     ) {
@@ -131,11 +154,14 @@ fun CarCarousel(car: Car) {
 }
 
 @Composable
-fun CarSpecRow(car: Car) {
+fun CarSpecRow(
+    car: Car,
+    modifier: Modifier = Modifier
+) {
     Row(
         horizontalArrangement = Arrangement.SpaceBetween,
         modifier = Modifier
-            .padding(vertical = dimensionResource(R.dimen.small_padding))
+            .padding(vertical = dimensionResource(R.dimen.medium_padding))
     ) {
         LazyRow(
             horizontalArrangement = Arrangement.spacedBy(dimensionResource(R.dimen.small_padding))
@@ -199,5 +225,23 @@ fun SpecificationCard(
                 textAlign = TextAlign.Center
             )
         }
+    }
+}
+
+@Composable
+fun FavoriteButton(
+    onFavoriteClick: () -> Unit,
+    isFavorite: Boolean
+) {
+    Button(onClick = { onFavoriteClick() }) {
+        Icon(
+            imageVector = if (isFavorite) Icons.Default.Star else Icons.Outlined.StarOutline,
+            contentDescription = stringResource(R.string.favorites),
+            tint = Color(0xFFE5B80B),
+            modifier = Modifier
+                .size(24.dp)
+        )
+        Spacer(modifier = Modifier.width(dimensionResource(R.dimen.small_padding)))
+        Text(text = stringResource(R.string.favorites))
     }
 }

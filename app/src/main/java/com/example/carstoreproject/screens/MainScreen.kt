@@ -149,7 +149,8 @@ fun MainScreen(
                 if (selectedCar != null) {
                     CarDetailScreen(
                         car = selectedCar,
-                        navController = navigationController
+                        navController = navigationController,
+                        userViewModel = userViewModel
                     )
                 }
             }
