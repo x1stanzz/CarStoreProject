@@ -18,4 +18,5 @@ sealed class Screen (
     object BrandCarsScreen : Screen(route = "brand_cars/{brand}") {
         fun createRoute(brand: String) = "brand_cars/$brand"
     }
+    object MapScreen : Screen(route = "map")
 }

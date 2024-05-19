@@ -2,6 +2,7 @@ package com.example.carstoreproject.screens
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -27,6 +28,7 @@ import androidx.compose.material.icons.filled.BarChart
 import androidx.compose.material.icons.filled.EventSeat
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.LocalGasStation
+import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material.icons.filled.Speed
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material.icons.outlined.StarOutline
@@ -53,6 +55,7 @@ import coil.compose.AsyncImage
 import com.example.carstoreproject.R
 import com.example.carstoreproject.data.viewmodels.UserViewModel
 import com.example.carstoreproject.models.Car
+import com.example.carstoreproject.navigation.Screen
 
 @Composable
 fun CarDetailScreen(
@@ -94,8 +97,13 @@ fun CarDetailScreen(
             car = car
         )
         Row(
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween
         ) {
+            MapLinkButton(
+                onMapClick = { navController.navigate(Screen.MapScreen.route) }
+            )
             FavoriteButton(
                 onFavoriteClick = { userViewModel.toggleFavoriteCar(car.name) },
                 isFavorite = isFavorite
@@ -243,5 +251,26 @@ fun FavoriteButton(
         )
         Spacer(modifier = Modifier.width(dimensionResource(R.dimen.small_padding)))
         Text(text = stringResource(R.string.favorites))
+    }
+}
+
+@Composable
+fun MapLinkButton(
+    onMapClick: () -> Unit
+) {
+    Row(
+        modifier = Modifier.clickable(onClick = onMapClick),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Icon(
+            imageVector = Icons.Default.LocationOn,
+            contentDescription = null,
+            tint = MaterialTheme.colorScheme.primary
+        )
+        Text(
+            text = stringResource(R.string.view_on_map),
+            color = MaterialTheme.colorScheme.primary,
+            modifier = Modifier.padding(start = dimensionResource(R.dimen.extra_small_padding))
+        )
     }
 }

@@ -168,6 +168,11 @@ fun MainScreen(
                     )
                 }
             }
+            composable(route = Screen.MapScreen.route) {
+                MapScreen(
+                    navController = navigationController
+                )
+            }
         }
     }
 }
