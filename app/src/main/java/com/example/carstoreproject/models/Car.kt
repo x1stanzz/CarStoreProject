@@ -12,4 +12,6 @@ class Car {
     val kmpl: Double? = null
     val engineSize: Int? = null
     val numberOfSeats: Int? = null
+    val latitude: Double? = null
+    val longitude: Double? = null
 }

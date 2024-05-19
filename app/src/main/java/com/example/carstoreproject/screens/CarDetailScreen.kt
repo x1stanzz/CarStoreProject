@@ -102,7 +102,7 @@ fun CarDetailScreen(
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             MapLinkButton(
-                onMapClick = { navController.navigate(Screen.MapScreen.route) }
+                onMapClick = { navController.navigate(Screen.MapScreen.createRoute(car.latitude!!, car.longitude!!)) }
             )
             FavoriteButton(
                 onFavoriteClick = { userViewModel.toggleFavoriteCar(car.name) },

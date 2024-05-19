@@ -75,7 +75,10 @@ fun MainScreen(
     val currentRoute = navBackStackEntry?.destination?.route
     Scaffold(
         bottomBar = {
-            if (currentRoute != Screen.CarDetailScreen.route) {
+            if (
+                currentRoute != Screen.CarDetailScreen.route ||
+                currentRoute != Screen.MapScreen.route
+                ) {
                 NavigationBar(
                     containerColor = MaterialTheme.colorScheme.background
                 ) {
@@ -168,9 +171,19 @@ fun MainScreen(
                     )
                 }
             }
-            composable(route = Screen.MapScreen.route) {
+            composable(
+                route = Screen.MapScreen.route,
+                arguments = listOf(
+                    navArgument("latitude") { type = NavType.FloatType },
+                    navArgument("longitude") { type = NavType.FloatType }
+                )
+                ) { backStackEntry ->
+                val latitude = backStackEntry.arguments?.getFloat("latitude")?.toDouble() ?: 0.0
+                val longitude = backStackEntry.arguments?.getFloat("longitude")?.toDouble() ?: 0.0
                 MapScreen(
-                    navController = navigationController
+                    navController = navigationController,
+                    latitude = latitude,
+                    longitude = longitude
                 )
             }
         }

@@ -69,6 +69,8 @@ dependencies {
     implementation("androidx.navigation:navigation-runtime:2.7.7")
     implementation("androidx.navigation:navigation-compose:2.7.7")
     implementation("io.coil-kt:coil-compose:2.6.0")
+    implementation("com.mapbox.maps:android:11.3.1")
+    implementation("com.mapbox.extension:maps-compose:11.3.1")
     implementation(libs.firebase.auth)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
