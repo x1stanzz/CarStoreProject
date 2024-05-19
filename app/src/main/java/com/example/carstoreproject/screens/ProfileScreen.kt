@@ -91,6 +91,7 @@ fun ProfileScreen() {
             ) {
                 DataTextField(
                     icon = Icons.Outlined.Person,
+                    labelId = R.string.first_name,
                     data = firstName,
                     onValueChange = {
                         firstName = it
@@ -101,13 +102,13 @@ fun ProfileScreen() {
                 )
             }
             Row(
-                horizontalArrangement = Arrangement.SpaceBetween,
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(vertical = dimensionResource(R.dimen.extra_small_padding))
             ) {
                 DataTextField(
                     icon = Icons.Outlined.Person,
+                    labelId = R.string.last_name,
                     data = lastName,
                     onValueChange = {
                         lastName = it
@@ -118,13 +119,13 @@ fun ProfileScreen() {
                 )
             }
             Row(
-                horizontalArrangement = Arrangement.SpaceBetween,
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(vertical = dimensionResource(R.dimen.extra_small_padding))
             ) {
                 DataTextField(
                     icon = Icons.Outlined.Email,
+                    labelId = R.string.email,
                     data = email,
                     onValueChange = {
                         email = it

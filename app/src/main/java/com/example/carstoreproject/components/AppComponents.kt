@@ -379,6 +379,7 @@ fun SearchField(
 @Composable
 fun DataTextField(
     icon: ImageVector,
+    labelId: Int,
     data: String,
     onValueChange: (String) -> Unit,
     isReadOnly: Boolean,
@@ -388,6 +389,7 @@ fun DataTextField(
         leadingIcon = {
             Icon(imageVector = icon, contentDescription = null)
         },
+        label = { Text(text = stringResource(labelId)) },
         value = data,
         onValueChange = onValueChange,
         colors = TextFieldDefaults.colors(

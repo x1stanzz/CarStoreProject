@@ -1,14 +1,12 @@
 package com.example.carstoreproject.screens
 
 import android.annotation.SuppressLint
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -34,7 +32,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -160,7 +157,7 @@ fun ShowBrands(
                     containerColor = MaterialTheme.colorScheme.inverseOnSurface
                 ),
                 elevation = CardDefaults.cardElevation(
-                    defaultElevation = 4.dp
+                    defaultElevation = 8.dp
                 )
             ) {
                 Box(modifier = Modifier
@@ -222,7 +219,7 @@ fun CarCard(
         modifier = Modifier
             .fillMaxWidth()
             .padding(dimensionResource(R.dimen.extra_small_padding))
-            .height(180.dp)
+            .height(120.dp)
             .clickable {
                 val brand = car.brand
                 val carName = car.name
@@ -230,9 +227,9 @@ fun CarCard(
                 val carYear = car.year
                 navController.navigate(
                     Screen.CarDetailScreen.createRoute(
-                        car.brand!!,
-                        car.name!!,
-                        car.price!!,
+                        brand!!,
+                        carName!!,
+                        carPrice!!,
                         carYear!!
                     )
                 )
@@ -249,14 +246,12 @@ fun CarCard(
                     model = car.image,
                     contentDescription = car.name,
                     contentScale = ContentScale.FillWidth,
-                    modifier = Modifier
-                        .height(120.dp),
-                    alignment = Alignment.Center
+                    modifier = Modifier.fillMaxWidth() ,alignment = Alignment.Center
                 )
             }
             Column(
                 modifier = Modifier
-                    .weight(1f)
+                    .weight(1.5f)
                     .padding(dimensionResource(R.dimen.small_padding))
                     .fillMaxHeight(),
                 horizontalAlignment = Alignment.Start
@@ -274,35 +269,29 @@ fun CarCard(
                     model = car.brandLogo,
                     contentDescription = car.brand,
                     modifier = Modifier
-                        .height(40.dp)
+                        .height(30.dp)
                         .padding(top = dimensionResource(R.dimen.small_padding))
                 )
-                Spacer(modifier = Modifier.weight(1f))
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
+                    Text(
+                        text = "$${car.price!!}",
+                        style = MaterialTheme.typography.titleMedium
+                    )
                     Box(
-                        modifier = Modifier
-                            .clip(RoundedCornerShape(8.dp))
-                            .background(MaterialTheme.colorScheme.primary)
+                        modifier = Modifier.size(48.dp)
                     ) {
-                        Text(
-                            text = "$${car.price!!}",
-                            style = MaterialTheme.typography.bodyMedium,
-                            color = MaterialTheme.colorScheme.onSecondary,
-                            modifier = Modifier
-                                .padding(dimensionResource(R.dimen.small_padding))
-                        )
-                    }
-                    IconButton(onClick = { onFavoriteClick(car.name) }) {
-                        Icon(
-                            imageVector = if (isFavorite) Icons.Default.Star else Icons.Outlined.StarOutline,
-                            contentDescription = "Favorite",
-                            tint = Color(0xFFE5B80B),
-                            modifier = Modifier.size(36.dp)
-                        )
+                        IconButton(onClick = { onFavoriteClick(car.name) }) {
+                            Icon(
+                                imageVector = if (isFavorite) Icons.Default.Star else Icons.Outlined.StarOutline,
+                                contentDescription = "Favorite",
+                                tint = Color(0xFFE5B80B),
+                                modifier = Modifier.size(32.dp)
+                            )
+                        }
                     }
                 }
             }
