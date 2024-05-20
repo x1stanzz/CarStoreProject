@@ -21,6 +21,7 @@ import androidx.compose.material.icons.outlined.Email
 import androidx.compose.material.icons.outlined.Person
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
+import androidx.compose.material3.Divider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Snackbar
 import androidx.compose.material3.Text
@@ -77,81 +78,90 @@ fun ProfileScreen() {
             imageUri.value = it.imageUri
         }
     }
-    Column(modifier = Modifier.padding(dimensionResource(R.dimen.medium_padding))) {
-        Text(text = stringResource(R.string.profile), style = MaterialTheme.typography.headlineLarge)
+    Column {
+        Text(
+            text = stringResource(R.string.profile),
+            style = MaterialTheme.typography.headlineLarge,
+            modifier = Modifier.padding(dimensionResource(R.dimen.medium_padding))
+        )
+        Divider(color = MaterialTheme.colorScheme.onBackground)
         ProfileImage(imageUri, painter) {
             isModified = true
         }
-        user?.let {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(vertical = dimensionResource(R.dimen.extra_small_padding))
+        Column(
+            modifier = Modifier.padding(dimensionResource(R.dimen.medium_padding))
+        ) {
+            user?.let {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = dimensionResource(R.dimen.extra_small_padding))
 
-            ) {
-                DataTextField(
-                    icon = Icons.Outlined.Person,
-                    labelId = R.string.first_name,
-                    data = firstName,
-                    onValueChange = {
-                        firstName = it
-                        isModified = true
-                    },
-                    isReadOnly = false,
-                    modifier = Modifier.fillMaxWidth()
-                )
-            }
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(vertical = dimensionResource(R.dimen.extra_small_padding))
-            ) {
-                DataTextField(
-                    icon = Icons.Outlined.Person,
-                    labelId = R.string.last_name,
-                    data = lastName,
-                    onValueChange = {
-                        lastName = it
-                        isModified = true
-                    },
-                    isReadOnly = false,
-                    modifier = Modifier.fillMaxWidth()
-                )
-            }
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(vertical = dimensionResource(R.dimen.extra_small_padding))
-            ) {
-                DataTextField(
-                    icon = Icons.Outlined.Email,
-                    labelId = R.string.email,
-                    data = email,
-                    onValueChange = {
-                        email = it
-                    },
-                    isReadOnly = true,
-                    modifier = Modifier.fillMaxWidth()
-                )
-            }
-            Spacer(modifier = Modifier.weight(1f))
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.Center
-            ) {
-                Button(
-                    onClick = {
-                        userViewModel.updateUserData(firstName, lastName, email, imageUri.value)
-                        isModified = false
-                        showMessage = true
-                    },
-                    enabled = isModified
                 ) {
-                    Text(text = stringResource(R.string.save_changes))
+                    DataTextField(
+                        icon = Icons.Outlined.Person,
+                        labelId = R.string.first_name,
+                        data = firstName,
+                        onValueChange = {
+                            firstName = it
+                            isModified = true
+                        },
+                        isReadOnly = false,
+                        modifier = Modifier.fillMaxWidth()
+                    )
                 }
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = dimensionResource(R.dimen.extra_small_padding))
+                ) {
+                    DataTextField(
+                        icon = Icons.Outlined.Person,
+                        labelId = R.string.last_name,
+                        data = lastName,
+                        onValueChange = {
+                            lastName = it
+                            isModified = true
+                        },
+                        isReadOnly = false,
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                }
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = dimensionResource(R.dimen.extra_small_padding))
+                ) {
+                    DataTextField(
+                        icon = Icons.Outlined.Email,
+                        labelId = R.string.email,
+                        data = email,
+                        onValueChange = {
+                            email = it
+                        },
+                        isReadOnly = true,
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                }
+                Spacer(modifier = Modifier.weight(1f))
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.Center
+                ) {
+                    Button(
+                        onClick = {
+                            userViewModel.updateUserData(firstName, lastName, email, imageUri.value)
+                            isModified = false
+                            showMessage = true
+                        },
+                        enabled = isModified
+                    ) {
+                        Text(text = stringResource(R.string.save_changes))
+                    }
+                }
+            } ?: run {
+                Text(text = "No user is currently signed in.")
             }
-        } ?: run {
-            Text(text = "No user is currently signed in.")
         }
         if(showMessage) {
             Snackbar(

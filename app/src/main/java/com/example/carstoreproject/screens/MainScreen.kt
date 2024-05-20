@@ -70,7 +70,7 @@ fun MainScreen(
     Scaffold(
         bottomBar = {
             if (
-                currentRoute != Screen.CarDetailScreen.route ||
+                currentRoute != Screen.CarDetailScreen.route &&
                 currentRoute != Screen.MapScreen.route
                 ) {
                 NavigationBar(

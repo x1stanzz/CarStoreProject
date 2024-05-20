@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Divider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -24,15 +25,18 @@ fun FavouriteScreen(
     Column(
         modifier = Modifier
             .verticalScroll(rememberScrollState())
-            .padding(dimensionResource(R.dimen.medium_padding))
     ) {
         val favoriteCarIds = userViewModel.user.value?.favoriteCars ?: listOf()
         val favoriteCars = carsViewModel.carsList.filter { favoriteCarIds.contains(it.name) }
         Text(
             text = stringResource(R.string.favorites),
-            style = MaterialTheme.typography.headlineLarge
+            style = MaterialTheme.typography.headlineLarge,
+            modifier = Modifier.padding(dimensionResource(R.dimen.medium_padding))
         )
-        Column {
+        Divider(color = MaterialTheme.colorScheme.onBackground)
+        Column(
+            modifier = Modifier.padding(dimensionResource(R.dimen.medium_padding))
+        ) {
             favoriteCars.forEach {car ->
                 CarCard(
                     car = car,
