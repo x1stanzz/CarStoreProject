@@ -16,13 +16,12 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBackIosNew
 import androidx.compose.material.icons.filled.BarChart
@@ -45,7 +44,12 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -54,6 +58,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -91,46 +96,58 @@ fun CarDetailScreen(
                 }
             }
         }
-    ) {
-        Column(
+    ) { innerPadding ->
+        LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
-                .verticalScroll(rememberScrollState())
+                .padding(innerPadding)
         ) {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(dimensionResource(R.dimen.medium_padding)),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                IconButton(onClick = { navController.popBackStack() }) {
-                    Icon(
-                        imageVector = Icons.Filled.ArrowBackIosNew,
-                        contentDescription = null
+            item {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(dimensionResource(R.dimen.medium_padding)),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    IconButton(onClick = { navController.popBackStack() }) {
+                        Icon(
+                            imageVector = Icons.Filled.ArrowBackIosNew,
+                            contentDescription = null
+                        )
+                    }
+                    Text(
+                        text = car.name,
+                        style = MaterialTheme.typography.headlineLarge
                     )
                 }
-                Text(
-                    text = car.name,
-                    style = MaterialTheme.typography.headlineLarge
-                )
             }
-            Divider(color = MaterialTheme.colorScheme.onBackground)
-            Column(
-                modifier = Modifier.padding(dimensionResource(R.dimen.medium_padding))
-            ) {
+            item {
+                Divider(
+                    modifier = Modifier.fillMaxWidth(),
+                    color = MaterialTheme.colorScheme.onBackground)
+            }
+            item {
                 CarCarousel(
                     car = car,
-                    modifier = Modifier.padding(vertical = dimensionResource(R.dimen.medium_padding))
+                    modifier = Modifier.padding(dimensionResource(R.dimen.medium_padding))
                 )
                 Text(
                     text = stringResource(R.string.overview),
-                    style = MaterialTheme.typography.headlineSmall
+                    style = MaterialTheme.typography.headlineSmall,
+                    modifier = Modifier.padding(horizontal = dimensionResource(R.dimen.medium_padding))
+                )
+                DescriptionText(
+                    description = car.description ?: "",
+                    modifier = Modifier.padding(horizontal = dimensionResource(R.dimen.medium_padding))
                 )
                 CarSpecRow(
-                    car = car
+                    car = car,
+                    modifier = Modifier.padding(horizontal = dimensionResource(R.dimen.medium_padding))
                 )
                 Row(
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = dimensionResource(R.dimen.medium_padding)),
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.End
                 ) {
@@ -193,6 +210,33 @@ fun CarCarousel(
 }
 
 @Composable
+fun DescriptionText(
+    description: String,
+    modifier: Modifier = Modifier
+) {
+    var isExpanded by remember { mutableStateOf(false)}
+    Column(
+        modifier = modifier
+    ) {
+        Text(
+            text = description,
+            maxLines = if (isExpanded) Int.MAX_VALUE else 3
+        )
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.End
+        ) {
+            TextButton(onClick = { isExpanded = !isExpanded }) {
+                Text(
+                    text = if (isExpanded) stringResource(R.string.show_less) else stringResource(R.string.show_more),
+                    fontWeight = FontWeight.Bold
+                )
+            }
+        }
+    }
+}
+
+@Composable
 fun CarSpecRow(
     car: Car,
     modifier: Modifier = Modifier
@@ -203,7 +247,8 @@ fun CarSpecRow(
             .padding(vertical = dimensionResource(R.dimen.medium_padding))
     ) {
         LazyRow(
-            horizontalArrangement = Arrangement.spacedBy(dimensionResource(R.dimen.small_padding))
+            horizontalArrangement = Arrangement.spacedBy(dimensionResource(R.dimen.small_padding)),
+            modifier = modifier
         ) {
             items(6) { index ->
                 SpecificationCard(

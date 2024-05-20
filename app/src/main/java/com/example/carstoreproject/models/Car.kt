@@ -8,6 +8,7 @@ data class Car (
     val name: String? = null,
     val price: Int? = null,
     val year: Int? = null,
+    val description: String? = null,
     val color: String? = null,
     val maxSpeed: Int? = null,
     val kmpl: Double? = null,
