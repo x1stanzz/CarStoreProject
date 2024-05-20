@@ -20,4 +20,8 @@ sealed class Screen (
     object MapScreen : Screen(route = "map/{latitude}/{longitude}") {
         fun createRoute(latitude: Double?, longitude: Double?) = "map/$latitude/$longitude"
     }
+
+    object SearchResultScreen : Screen(route = "search_results/{query}") {
+        fun createRoute(query: String) = "search_results/$query"
+    }
 }

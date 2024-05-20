@@ -75,7 +75,9 @@ fun HomeScreen(
         Row(
             modifier = Modifier.fillMaxWidth()
         ) {
-            SearchField(modifier = Modifier.fillMaxWidth())
+            SearchField(modifier = Modifier.fillMaxWidth()) { query ->
+                navController.navigate("search_results/$query")
+            }
         }
         SetData(
             viewModel = carsViewModel,

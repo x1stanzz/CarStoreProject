@@ -18,6 +18,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.ClickableText
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
@@ -46,6 +47,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -350,21 +352,29 @@ fun CustomizedTextButton(
 
 @Composable
 fun SearchField(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onSearch: (String) -> Unit
 ) {
-    var textValue by remember { mutableStateOf("")}
+    var query by remember { mutableStateOf("") }
+    val keyboardController = LocalSoftwareKeyboardController.current
     OutlinedTextField(
         leadingIcon = {
             Icon(imageVector = Icons.Filled.Search, contentDescription = null)
         },
-        value = textValue,
+        value = query,
         onValueChange = {
-            textValue = it
+            query = it
         },
         label = { Text(text = stringResource(R.string.search))},
         keyboardOptions = KeyboardOptions(
             keyboardType = KeyboardType.Text,
             imeAction = ImeAction.Search
+        ),
+        keyboardActions = KeyboardActions(
+            onSearch = {
+                keyboardController?.hide()
+                onSearch(query)
+            }
         ),
         colors = OutlinedTextFieldDefaults.colors(
             unfocusedBorderColor = MaterialTheme.colorScheme.primary,
@@ -372,6 +382,7 @@ fun SearchField(
             focusedLeadingIconColor = MaterialTheme.colorScheme.primary,
             focusedLabelColor = MaterialTheme.colorScheme.primary
         ),
+        singleLine = true,
         modifier = modifier
     )
 }
