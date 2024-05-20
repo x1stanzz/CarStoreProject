@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -53,11 +52,6 @@ fun MainScreen(
             title = "Home",
             icon = Icons.Filled.Home,
             route = Screen.HomeScreen.route
-        ),
-        BottomNavigationItem(
-            title = "Search",
-            icon = Icons.Filled.Search,
-            route = Screen.SearchScreen.route
         ),
         BottomNavigationItem(
             title = "Favorite",
@@ -120,9 +114,6 @@ fun MainScreen(
                     navController = navigationController,
                     userViewModel = userViewModel
                 )
-            }
-            composable(Screen.SearchScreen.route) {
-                SearchScreen()
             }
             composable(Screen.FavouriteScreen.route) {
                 FavouriteScreen(

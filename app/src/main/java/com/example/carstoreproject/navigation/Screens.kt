@@ -4,7 +4,6 @@ sealed class Screen (
     val route: String
 ) {
     object HomeScreen : Screen(route = "home")
-    object SearchScreen : Screen(route = "search")
     object FavouriteScreen : Screen(route = "favourite")
     object SettingsScreen : Screen(route = "setting")
     object CarDetailScreen : Screen(route = "car_detail/{brand}/{name}/{price}/{year}") {
@@ -18,5 +17,7 @@ sealed class Screen (
     object BrandCarsScreen : Screen(route = "brand_cars/{brand}") {
         fun createRoute(brand: String) = "brand_cars/$brand"
     }
-    object MapScreen : Screen(route = "map")
+    object MapScreen : Screen(route = "map/{latitude}/{longitude}") {
+        fun createRoute(latitude: Double?, longitude: Double?) = "map/$latitude/$longitude"
+    }
 }
