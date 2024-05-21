@@ -118,7 +118,7 @@ fun MainScreen(
             composable(Screen.SearchResultScreen.route) { backStackEntry ->
                 val query = backStackEntry.arguments?.getString("query") ?: ""
                 SearchResultScreen(
-                    query = query,
+                    initialQuery = query,
                     cars = carsViewModel.carsList,
                     navController = navigationController,
                     userViewModel = userViewModel
