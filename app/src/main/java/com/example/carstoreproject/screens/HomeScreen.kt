@@ -14,11 +14,10 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material.icons.outlined.StarOutline
@@ -59,31 +58,38 @@ fun HomeScreen(
     userViewModel: UserViewModel,
     navController: NavController
 ) {
-    Column(
+    LazyColumn(
         modifier = Modifier
             .padding(dimensionResource(R.dimen.medium_padding))
             .fillMaxWidth()
-            .verticalScroll(rememberScrollState())
     ) {
-        LogoImage(
-            imageId = R.drawable.accelerato_logo,
-            modifier = Modifier
-                .width(200.dp)
-                .height(75.dp)
-                .align(Alignment.CenterHorizontally)
-        )
-        Row(
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            SearchField(modifier = Modifier.fillMaxWidth()) { query ->
-                navController.navigate("search_results/$query")
+        item {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.Center
+            ) {
+                LogoImage(
+                    imageId = R.drawable.accelerato_logo,
+                    modifier = Modifier
+                        .width(200.dp)
+                        .height(75.dp)
+                )
+            }
+            Row(
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                SearchField(modifier = Modifier.fillMaxWidth()) { query ->
+                    navController.navigate("search_results/$query")
+                }
             }
         }
-        SetData(
-            viewModel = carsViewModel,
-            navController = navController,
-            userViewModel = userViewModel,
-        )
+        item {
+            SetData(
+                viewModel = carsViewModel,
+                navController = navController,
+                userViewModel = userViewModel,
+            )
+        }
     }
 }
 
