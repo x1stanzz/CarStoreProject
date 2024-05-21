@@ -60,7 +60,11 @@ fun HomeScreen(
 ) {
     LazyColumn(
         modifier = Modifier
-            .padding(dimensionResource(R.dimen.medium_padding))
+            .padding(
+                start = dimensionResource(R.dimen.medium_padding),
+                end = dimensionResource(R.dimen.medium_padding),
+                top = dimensionResource(R.dimen.medium_padding)
+            )
             .fillMaxWidth()
     ) {
         item {
