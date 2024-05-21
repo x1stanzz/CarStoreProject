@@ -22,6 +22,7 @@ import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.ClickableText
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBackIosNew
 import androidx.compose.material.icons.filled.BarChart
@@ -44,7 +45,6 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -58,8 +58,11 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
@@ -215,25 +218,46 @@ fun DescriptionText(
     modifier: Modifier = Modifier
 ) {
     var isExpanded by remember { mutableStateOf(false)}
-    Column(
-        modifier = modifier
-    ) {
-        Text(
-            text = description,
-            maxLines = if (isExpanded) Int.MAX_VALUE else 3
+    val annotatedText = buildAnnotatedString {
+        append(
+            if (isExpanded) description else {
+                if (description.length > 130) {
+                    "${description.take(130)}..."
+                } else {
+                    description
+                }
+            }
         )
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.End
-        ) {
-            TextButton(onClick = { isExpanded = !isExpanded }) {
-                Text(
-                    text = if (isExpanded) stringResource(R.string.show_less) else stringResource(R.string.show_more),
+        if (description.length > 130) {
+            append(" ")
+            pushStringAnnotation(
+                tag = "showMore",
+                annotation = if (isExpanded) stringResource(R.string.show_less) else stringResource(R.string.show_more)
+            )
+            withStyle(
+                style = SpanStyle(
+                    color = MaterialTheme.colorScheme.primary,
                     fontWeight = FontWeight.Bold
                 )
+            ) {
+                append(if (isExpanded) stringResource(R.string.show_less) else stringResource(R.string.show_more))
             }
+            pop()
         }
     }
+
+    ClickableText(
+        text = annotatedText,
+        onClick = { offset ->
+            annotatedText.getStringAnnotations(
+                tag = "showMore", start = offset, end = offset
+            ).firstOrNull()?.let {
+                isExpanded = !isExpanded
+            }
+        },
+        style = MaterialTheme.typography.bodyLarge,
+        modifier = modifier
+    )
 }
 
 @Composable
