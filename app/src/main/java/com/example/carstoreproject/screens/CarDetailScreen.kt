@@ -154,8 +154,12 @@ fun CarDetailScreen(
                         .fillMaxWidth()
                         .padding(horizontal = dimensionResource(R.dimen.medium_padding)),
                     verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.End
+                    horizontalArrangement = Arrangement.SpaceBetween
                 ) {
+                    Text(
+                        text = "$${car.price.toString()}",
+                        style = MaterialTheme.typography.headlineSmall
+                    )
                     MapLinkButton(
                         onMapClick = { navController.navigate(Screen.MapScreen.createRoute(car.latitude!!, car.longitude!!)) }
                     )
