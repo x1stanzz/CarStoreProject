@@ -24,4 +24,12 @@ sealed class Screen (
     object SearchResultScreen : Screen(route = "search_results/{query}") {
         fun createRoute(query: String) = "search_results/$query"
     }
+    object PurchaseConfirmationScreen : Screen(route = "purchase_confirmation/{brand}/{name}/{price}/{year}") {
+        fun createRoute(
+            brand: String,
+            name: String,
+            price: Int,
+            year: Int
+        ) = "purchase_confirmation/$brand/$name/$price/$year"
+    }
 }

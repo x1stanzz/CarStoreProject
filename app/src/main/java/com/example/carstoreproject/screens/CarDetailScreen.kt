@@ -69,6 +69,8 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.example.carstoreproject.R
+import com.example.carstoreproject.animation.bounceClick
+import com.example.carstoreproject.data.viewmodels.CarsViewModel
 import com.example.carstoreproject.data.viewmodels.UserViewModel
 import com.example.carstoreproject.models.Car
 import com.example.carstoreproject.navigation.Screen
@@ -78,7 +80,8 @@ import com.example.carstoreproject.navigation.Screen
 fun CarDetailScreen(
     car: Car,
     navController: NavController,
-    userViewModel: UserViewModel
+    userViewModel: UserViewModel,
+    carsViewModel: CarsViewModel
 ) {
     val isFavorite = userViewModel.isFavorite(car.name!!)
     Scaffold(
@@ -96,8 +99,13 @@ fun CarDetailScreen(
                     )
                     Spacer(modifier = Modifier.weight(1f))
                     BuyButton(onClick = {
-
-                    })
+                        navController.navigate(
+                            Screen.PurchaseConfirmationScreen.createRoute(
+                                car.brand!!, car.name, car.price!!, car.year!!
+                            )
+                        )
+                    },
+                        modifier = Modifier.bounceClick())
                 }
             }
         }
@@ -263,7 +271,8 @@ fun DescriptionText(
         },
         style = TextStyle(
             fontSize = 16.sp,
-            color = MaterialTheme.colorScheme.onSurface
+            color = MaterialTheme.colorScheme.onSurface,
+            lineHeight = 24.sp
         ),
         modifier = modifier
     )

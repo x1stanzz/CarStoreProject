@@ -71,7 +71,8 @@ fun MainScreen(
         bottomBar = {
             if (
                 currentRoute != Screen.CarDetailScreen.route &&
-                currentRoute != Screen.MapScreen.route
+                currentRoute != Screen.MapScreen.route &&
+                currentRoute != Screen.PurchaseConfirmationScreen.route
                 ) {
                 NavigationBar(
                     containerColor = MaterialTheme.colorScheme.background
@@ -153,9 +154,35 @@ fun MainScreen(
                     CarDetailScreen(
                         car = selectedCar,
                         navController = navigationController,
-                        userViewModel = userViewModel
+                        userViewModel = userViewModel,
+                        carsViewModel = carsViewModel
                     )
                 }
+            }
+            composable(
+                route = Screen.PurchaseConfirmationScreen.route,
+                arguments = listOf(
+                    navArgument("brand") { type = NavType.StringType },
+                    navArgument("name") { type = NavType.StringType },
+                    navArgument("price") { type = NavType.IntType },
+                    navArgument("year") { type = NavType.IntType }
+                )
+            ) { backStackEntry ->
+                val brand = backStackEntry.arguments?.getString("brand")
+                val name = backStackEntry.arguments?.getString("name")
+                val price = backStackEntry.arguments?.getInt("price")
+                val year = backStackEntry.arguments?.getInt("year")
+
+                val selectedCar = carsViewModel.carsList.firstOrNull { car ->
+                    car.brand == brand && car.name == name && car.price == price && car.year == year
+                }
+
+                PurchaseConfirmationScreen(
+                    car = selectedCar!!,
+                    navController = navigationController,
+                    carsViewModel = carsViewModel,
+                    userViewModel = userViewModel
+                )
             }
             composable(
                 route = Screen.BrandCarsScreen.route,

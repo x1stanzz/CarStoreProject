@@ -49,4 +49,8 @@
     <string name="change_profile_picture">Change profile picture</string>
     <string name="change_saved">Changes have been saved</string>
     <string name="search_results">Search Results</string>
+    <string name="confirmation">Confirmation</string>
+    <string name="user_details">User Details</string>
+    <string name="full_name">Full Name: </string>
+    <string name="confirm">Confirm</string>
 </resources>
