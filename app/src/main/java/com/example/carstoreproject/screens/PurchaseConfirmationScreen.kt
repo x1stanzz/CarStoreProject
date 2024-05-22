@@ -31,6 +31,7 @@ import com.example.carstoreproject.components.ButtonComponent
 import com.example.carstoreproject.data.viewmodels.CarsViewModel
 import com.example.carstoreproject.data.viewmodels.UserViewModel
 import com.example.carstoreproject.models.Car
+import com.example.carstoreproject.navigation.Screen
 
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -120,7 +121,7 @@ fun PurchaseConfirmationScreen(
             }
             ButtonComponent(
                 textId = R.string.confirm,
-                onButtonClicked = { /*TODO*/ }
+                onButtonClicked = { navController.navigate(Screen.ThankYouScreen.route) }
             )
         }
     }

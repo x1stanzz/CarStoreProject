@@ -96,7 +96,9 @@ fun MainScreen(
                             colors = NavigationBarItemDefaults.colors(
                                 selectedIconColor = MaterialTheme.colorScheme.primary,
                                 selectedTextColor = MaterialTheme.colorScheme.primary,
-                                indicatorColor = MaterialTheme.colorScheme.background
+                                indicatorColor = MaterialTheme.colorScheme.background,
+                                unselectedTextColor = MaterialTheme.colorScheme.onBackground,
+                                unselectedIconColor = MaterialTheme.colorScheme.onBackground
                             )
                         )
                     }
@@ -212,6 +214,9 @@ fun MainScreen(
                     latitude = latitude,
                     longitude = longitude
                 )
+            }
+            composable(route = Screen.ThankYouScreen.route) {
+                ThankYouScreen(navController = navigationController)
             }
         }
     }

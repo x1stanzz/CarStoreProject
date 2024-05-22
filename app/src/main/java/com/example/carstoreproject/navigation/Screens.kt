@@ -32,4 +32,6 @@ sealed class Screen (
             year: Int
         ) = "purchase_confirmation/$brand/$name/$price/$year"
     }
+
+    object ThankYouScreen : Screen(route = "thank_you")
 }

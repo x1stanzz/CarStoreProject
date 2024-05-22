@@ -71,6 +71,7 @@ dependencies {
     implementation("io.coil-kt:coil-compose:2.6.0")
     implementation("com.mapbox.maps:android:11.3.1")
     implementation("com.mapbox.extension:maps-compose:11.3.1")
+    implementation("com.airbnb.android:lottie-compose:6.4.0")
     implementation(libs.firebase.auth)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
